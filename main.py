@@ -4,7 +4,7 @@ import os
 import sys
 
 HOME_PATH = os.environ['HOME']
-VESCKTOP_THEME_PATH = os.path.join(HOME_PATH, ".config/vesktop/themes")
+VESKTOP_THEME_PATH = os.path.join(HOME_PATH, ".config/vesktop/themes")
 
 def main():
     parser = argparse.ArgumentParser(description="Create a theme file from pywal colors.")
@@ -15,8 +15,8 @@ def main():
         print("Usage: main.py --image <image_path> --theme <theme_path>")
         sys.exit(1)
     
-    if not os.path.exists(VESCKTOP_THEME_PATH):
-        os.makedirs(VESCKTOP_THEME_PATH)
+    if not os.path.exists(VESKTOP_THEME_PATH):
+        os.makedirs(VESKTOP_THEME_PATH)
     
 
     image_path = args.image
@@ -27,7 +27,7 @@ def main():
         theme_text = theme_file.read()
     theme_file.close()
     theme_text = replace_keys(file=theme_text, keys=color_to_keys(get_colors(image_path)))
-    with open(os.path.join(VESCKTOP_THEME_PATH, theme_file_name), "w+") as file:
+    with open(os.path.join(VESKTOP_THEME_PATH, theme_file_name), "w+") as file:
         file.write(theme_text)
 
 #-----------------------------------------------------------------------------------------------
