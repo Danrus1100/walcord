@@ -1,1 +1,1 @@
-# Walcod - Pywal themes for Vesktop
+# Walcord - Pywal themes for Vesktop
