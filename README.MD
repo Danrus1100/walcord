@@ -20,9 +20,9 @@ To do this, download the theme, and replace the colors you want with KEY_<PYWAL_
 ***
 ```
 You can also use the following keys to simplify readability:
--**KEY_BORDER = KEY_2**
--**KEY_TEXT = KEY_15**
--**KEY_ACCENT = KEY_13**
+ - **KEY_BORDER = KEY_2**
+ - **KEY_TEXT = KEY_15**
+ - **KEY_ACCENT = KEY_13**
 
 After that, you can use this theme in walcord:
 
