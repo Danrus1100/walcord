@@ -1,4 +1,4 @@
-# Walcord - Pywal themes for Vesktop
+# Walcord - (Pywal)ing *every* themes for Vesktop
 
 ### How to build frome source:
 ```bash
