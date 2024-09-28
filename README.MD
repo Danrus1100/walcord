@@ -32,4 +32,4 @@ After that, you can use this theme in walcord:
 
 ### Theme examples:
  - Midnight:
-
+![swappy-20240928-142354.png]
