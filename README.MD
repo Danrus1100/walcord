@@ -12,7 +12,7 @@ pyinstaller --onefile main.py -n walcord
 ```
 ### Usage
 First, you need to prepare a topic that will be used as the basis for your theme.
-To do this, download the theme, and replace the colors you want with KEY_<PYWAL_COLOR_NAME>. Example:
+To do this, [download](https://betterdiscord.app/themes) the theme, and replace the colors you want with KEY_<PYWAL_COLOR_NAME>. Example:
 ```css
 ***
 --bg-3: KEY_BACKGROUND;
@@ -29,3 +29,7 @@ After that, you can use this theme in walcord:
 ```bash
 ./walcord -i <path/to/image> -t <path/to/theme>
 ```
+
+### Theme examples:
+ - Midnight:
+
