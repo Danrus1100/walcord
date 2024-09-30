@@ -1,5 +1,6 @@
 .venv/
 build/
 dist/
+
 main.spec
 walcord.spec

@@ -79,6 +79,24 @@ def color_to_keys(colors):
         "KEY_ACCENT": colors["colors"]["color13"]
     }
 
+def hex_to_rgb(hex_code):
+    hex_code = hex_code.lstrip('#')
+    return tuple(int(hex_code[i:i+2], 16) for i in (0, 2, 4))
+
+def rgb_string(rgb: tuple):
+    """
+    Converts a tuple of three integers representing a color in RGB format into a string in hex format.
+
+    :param rgb: A tuple of three integers representing a color in RGB format.
+    :type rgb: tuple
+    :return: A string in hex format representing the given color.
+    :rtype: str
+    """
+    return f"{rgb[0]}, {rgb[1]}, {rgb[2]}"
+
+def test_rgb_string():
+    return rgb_string((255, 0, 0))
+
 def replace_keys(file, keys):
     """
     Replace all occurrences of keys in a given string with their respective values.
@@ -96,4 +114,4 @@ def replace_keys(file, keys):
     return string
 
 if __name__ == "__main__":
-    main()
+    print(test_rgb_string())
