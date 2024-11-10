@@ -112,7 +112,7 @@ def main():
     parser.add_argument("--theme", "-t", type=str, help="The path to the theme file to replace colors in.")
     args = parser.parse_args()
     if not args.image and not args.theme:
-        print("Usage: main.py --image <image_path> --theme <theme_path>")
+        print("Usage: walcord --image <image_path> --theme <theme_path>")
         sys.exit(1)
     
     if not os.path.exists(VESKTOP_THEME_PATH):
