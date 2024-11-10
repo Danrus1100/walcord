@@ -40,11 +40,11 @@
 	--text-5: KEY(T); /* muted channels/chats and timestamps */
 
 	/* background and dark colors */
-	--bg-1: KEY(B, 0.25); /* dark buttons when clicked */
-	--bg-2: KEY(B, 0.25); /* dark buttons */
-	--bg-3: KEY(B, 0.5); /* spacing, secondary elements */
+	--bg-1: KEY(B, 0.05); /* dark buttons when clicked */
+	--bg-2: KEY(B, 0.05); /* dark buttons */
+	--bg-3: KEY(B, 0.75); /* spacing, secondary elements */
 	--bg-4: rgba(0, 0, 0, 0.05); /* main background color */
-	--hover: rgba(0, 0, 0, 0.5); /* channels and buttons when hovered */
+	--hover: rgba(0, 0, 0, 0.15); /* channels and buttons when hovered */
 	--active: hsla(220, 20%, 40%, 0.2); /* channels and buttons when clicked or selected */
 	--message-hover: hsla(220, 0%, 0%, 0.1); /* messages when hovered */
 
