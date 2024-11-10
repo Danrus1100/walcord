@@ -42,5 +42,5 @@ After that, you can use this theme in walcord:
 
 ### Theme examples (check examples folder):
  - Midnight:
-![image](images/swappy-20240928-142354.png)
-![another_image](images/swappy-20240928-142721.png)
+![image](images/midnight_1.png)
+![another_image](images/midnight_2.png)
