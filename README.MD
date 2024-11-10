@@ -49,6 +49,6 @@ After that, you can use this theme in walcord:
 walcord -i <path/to/image> -t <path/to/theme>
 ```
 
-### Theme examples (check examples folder):
+### Theme [examples](https://github.com/Danrus1100/walcord/tree/main/examples):
  - Midnight:
 ![another_image](images/midnight_2.png)
