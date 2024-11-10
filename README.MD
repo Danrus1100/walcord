@@ -46,7 +46,7 @@ All names of colors and they short vesions:
 After that, you can use this theme in walcord:
 
 ```bash
-./walcord -i <path/to/image> -t <path/to/theme>
+walcord -i <path/to/image> -t <path/to/theme>
 ```
 
 ### Theme examples (check examples folder):
