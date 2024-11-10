@@ -7,7 +7,7 @@ cd walcord
 python -m venv .venv/
 source .venv/bin/activate 
 pip install -r requirements.txt --upgrade
-pyinstaller --onefile main.py -n walcord
+pyinstaller walcord.spec
 ./dist/walcord
 ```
 ### Usage
