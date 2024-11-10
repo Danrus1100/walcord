@@ -10,7 +10,7 @@ pip install -r requirements.txt --upgrade
 pyinstaller walcord.spec
 ./dist/walcord
 ```
-### how to install from [releases](https://github.com/Danrus1100/walcord/releases):
+### How to install from [releases](https://github.com/Danrus1100/walcord/releases):
 1. Download a binary file
 2. clone in /usr/bin/ directory:
 ```bash
