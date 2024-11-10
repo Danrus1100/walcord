@@ -10,6 +10,15 @@ pip install -r requirements.txt --upgrade
 pyinstaller walcord.spec
 ./dist/walcord
 ```
+### how to install from [releases](https://github.com/Danrus1100/walcord/releases):
+1. Download a binary file
+2. clone in /usr/bin/ directory:
+```bash
+sudo cp ~/<folder_to>/walcord /usr/bin
+walcord
+```
+
+
 ### Usage
 First, you need to prepare a topic that will be used as the basis for your theme.
 To do this, [download](https://betterdiscord.app/themes) the theme, and replace the colors you want with KEY(key_name, opacity). Example:
