@@ -15,14 +15,24 @@ First, you need to prepare a topic that will be used as the basis for your theme
 To do this, [download](https://betterdiscord.app/themes) the theme, and replace the colors you want with KEY_<PYWAL_COLOR_NAME>. Example:
 ```css
 ***
---bg-3: KEY_BACKGROUND;
---text-3: KEY_2
+--bg-3: KEY(background);
+--text-3: KEY(2)
 ***
 ```
-You can also use the following keys to simplify readability:
- - **KEY_BORDER = KEY_2**
- - **KEY_TEXT = KEY_15**
- - **KEY_ACCENT = KEY_13**
+you can also set the transparency of the color from 0 to 1 and use short names:
+```css
+***
+--accent-1: KEY(f, 0.75)
+--hover: KEY(br, 1)
+***
+```
+All names of colors and they short vesions:
+ - **background: b**
+ - **foreground: f**
+ - **border: br**
+ - **text: t**
+ - **accent: a**
+
 
 After that, you can use this theme in walcord:
 
@@ -30,7 +40,7 @@ After that, you can use this theme in walcord:
 ./walcord -i <path/to/image> -t <path/to/theme>
 ```
 
-### Theme examples:
+### Theme examples (check examples folder):
  - Midnight:
-![image](swappy-20240928-142354.png)
-![another_image](swappy-20240928-142721.png)
+![image](images/swappy-20240928-142354.png)
+![another_image](images/swappy-20240928-142721.png)
