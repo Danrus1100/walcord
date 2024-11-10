@@ -1,5 +1,5 @@
 # Walcord - (Pywal)ing *every* themes for Vesktop
-
+![image](images/midnight_1.png)
 ### How to build frome source:
 ```bash
 git clone https://github.com/Danrus1100/walcord.git
@@ -42,5 +42,4 @@ After that, you can use this theme in walcord:
 
 ### Theme examples (check examples folder):
  - Midnight:
-![image](images/midnight_1.png)
 ![another_image](images/midnight_2.png)
