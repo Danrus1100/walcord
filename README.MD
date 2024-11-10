@@ -14,7 +14,7 @@ pyinstaller walcord.spec
 1. Download a binary file
 2. clone in /usr/bin/ directory:
 ```bash
-sudo cp ~/<folder_to>/walcord /usr/bin
+sudo cp <path_to>/walcord /usr/bin
 walcord
 ```
 
