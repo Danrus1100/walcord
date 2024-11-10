@@ -1,5 +1,5 @@
 # Walcord - (Pywal)ing *every* themes for Vesktop
-
+![image](images/midnight_1.png)
 ### How to build frome source:
 ```bash
 git clone https://github.com/Danrus1100/walcord.git
@@ -7,12 +7,12 @@ cd walcord
 python -m venv .venv/
 source .venv/bin/activate 
 pip install -r requirements.txt --upgrade
-pyinstaller --onefile main.py -n walcord
+pyinstaller walcord.spec
 ./dist/walcord
 ```
 ### Usage
 First, you need to prepare a topic that will be used as the basis for your theme.
-To do this, [download](https://betterdiscord.app/themes) the theme, and replace the colors you want with KEY_<PYWAL_COLOR_NAME>. Example:
+To do this, [download](https://betterdiscord.app/themes) the theme, and replace the colors you want with KEY(key_name, opacity). Example:
 ```css
 ***
 --bg-3: KEY(background);
@@ -42,5 +42,4 @@ After that, you can use this theme in walcord:
 
 ### Theme examples (check examples folder):
  - Midnight:
-![image](images/midnight_1.png)
 ![another_image](images/midnight_2.png)
