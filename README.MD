@@ -12,7 +12,7 @@ pyinstaller walcord.spec
 ```
 ### How to install from [releases](https://github.com/Danrus1100/walcord/releases):
 1. Download a binary file
-2. clone in /usr/bin/ directory:
+2. copy in /usr/bin/ directory:
 ```bash
 sudo cp <path_to>/walcord /usr/bin
 walcord
