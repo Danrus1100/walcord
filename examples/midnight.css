@@ -32,7 +32,7 @@
 	--mention-hover: hsla(190, 80%, 52%, 0.05); /* mentions & mention messages when hovered */
 
 	/* text colors */
-	--text-0: white; /* text on colored elements */
+	--text-0: KEY(T); /* text on colored elements */
 	--text-1: var(--text-2); /* other normally white text */
 	--text-2: KEY(T); /* headings and important text */
 	--text-3: KEY(T); /* normal text */
@@ -42,7 +42,7 @@
 	/* background and dark colors */
 	--bg-1: KEY(B, 0.05); /* dark buttons when clicked */
 	--bg-2: KEY(B, 0.05); /* dark buttons */
-	--bg-3: KEY(B, 0.75); /* spacing, secondary elements */
+	--bg-3: KEY(B, 0.5); /* spacing, secondary elements */
 	--bg-4: rgba(0, 0, 0, 0.05); /* main background color */
 	--hover: rgba(0, 0, 0, 0.15); /* channels and buttons when hovered */
 	--active: hsla(220, 20%, 40%, 0.2); /* channels and buttons when clicked or selected */

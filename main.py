@@ -7,7 +7,7 @@ import re
 HOME_PATH = os.environ['HOME']
 VESKTOP_THEME_PATH = os.path.join(HOME_PATH, ".config/vesktop/themes")
 
-def get_colors(image_path: str) -> dict:
+def get_colors_pywal(image_path: str) -> dict:
     """
     Returns a dictionary of colors generated from the given image path.
 
@@ -17,6 +17,21 @@ def get_colors(image_path: str) -> dict:
     :rtype: dict
     """
     return pywal.colors.get(image_path)
+
+def get_colors_json() -> dict:
+    """
+    Returns a dictionary of colors from the pywal json file.
+
+    :return: A dictionary of colors in the format of pywal.
+    :rtype: dict
+    """
+    cache_file = os.path.join(HOME_PATH, ".cache/wal/colors.json")
+    if not os.path.exists(cache_file):
+        print("Error: No cached colors found. Run pywal first or use --image <image_path>.")
+        sys.exit(-1)
+
+    with open(cache_file) as f:
+        return pywal.colors.colors_to_dict(f.read())
 
 def map_colors(colors: dict) -> dict:
     """
@@ -112,17 +127,19 @@ def main():
     parser.add_argument("--theme", "-t", type=str, help="The path to the theme file to replace colors in.")
     args = parser.parse_args()
     if not args.image and not args.theme:
-        print("Usage: walcord --image <image_path> --theme <theme_path>")
+        print("Usage: walcord --theme <theme_path> --image <image_path>")
         sys.exit(1)
     
     if not os.path.exists(VESKTOP_THEME_PATH):
         os.makedirs(VESKTOP_THEME_PATH)
 
-    image_path = args.image
+    if args.image:
+        colors = hex_to_rgb_map(map_colors(get_colors_pywal(args.image)))
+    else:
+        colors = hex_to_rgb_map(map_colors(get_colors_json()))
     theme_path = args.theme
     theme_file_name = os.path.basename(theme_path)
     theme_text = ""
-    colors = hex_to_rgb_map(map_colors(get_colors(image_path)))
     with open(theme_path, "r") as theme_file:
         theme_lines = theme_file.readlines()
     for i in theme_lines:
