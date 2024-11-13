@@ -3,6 +3,7 @@ import pywal
 import os
 import sys
 import re
+import json
 
 HOME_PATH = os.environ['HOME']
 VESKTOP_THEME_PATH = os.path.join(HOME_PATH, ".config/vesktop/themes")
@@ -31,7 +32,7 @@ def get_colors_json() -> dict:
         sys.exit(-1)
 
     with open(cache_file) as f:
-        return pywal.colors.colors_to_dict(f.read())
+        return json.load(f)
 
 def map_colors(colors: dict) -> dict:
     """
