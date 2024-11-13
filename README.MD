@@ -52,3 +52,10 @@ walcord -i <path/to/image> -t <path/to/theme>
 ### Theme [examples](https://github.com/Danrus1100/walcord/tree/main/examples):
  - Midnight:
 ![another_image](images/midnight_2.png)
+
+### ToDo
+- [ ] `--image` optional (*in progress*)
+- [ ] `--save-path` argument (saving a file to a specific path and name)
+- [ ] simple dark and colored theme
+- [ ] `--theme` optional (use simple dark/colored theme)
+- [ ] windows support
