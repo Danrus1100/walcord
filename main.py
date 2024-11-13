@@ -119,27 +119,62 @@ def replace_key(text: str) -> str:
     """
     return re.sub(r'KEY\((\w+)(?:,\s*(0\.\d+))?\)', remap_key, text)
 
+# мне нужна функция которая будет принимать строку с путем до дириктории или файла, и если таковой не существует, то создавать его
+
+def check_path(path: str, file_name: str = "") -> None:
+    """
+    Checks if the path exists and if not creates it.
+
+    :param path: The path to check.
+    :param file_name: The name of the file to create if name dosent given.
+    :type path: str
+    """
+    if not os.path.exists(path):
+        if "." in path:
+            with open(path, "w+") as f:
+                pass
+        else:
+            os.makedirs(path)
+            if file_name != "":
+                with open(os.path.join(path, file_name), "w+") as f:
+                    pass
+
 colors = {}
 
 def main():
     global colors
+    global VESKTOP_THEME_PATH
+
     parser = argparse.ArgumentParser(description="Create a theme file from pywal colors.")
     parser.add_argument("--image", "-i", type=str, help="The path to the image to generate colors from.")
     parser.add_argument("--theme", "-t", type=str, help="The path to the theme file to replace colors in.")
+    parser.add_argument("--output", "-o", type=str, help="The path to the output file. default: ~/.config/vesktop/themes/")
     args = parser.parse_args()
     if not args.image and not args.theme:
         print("Usage: walcord --theme <theme_path> --image <image_path>")
         sys.exit(1)
     
-    if not os.path.exists(VESKTOP_THEME_PATH):
-        os.makedirs(VESKTOP_THEME_PATH)
+#    if not os.path.exists(VESKTOP_THEME_PATH):
+#        os.makedirs(VESKTOP_THEME_PATH)
+    
+    theme_path = args.theme
+    theme_file_name = os.path.basename(theme_path)
+
+    if args.output:
+        VESKTOP_THEME_PATH = args.output
+        if "." in VESKTOP_THEME_PATH:
+            check_path(VESKTOP_THEME_PATH)
+        else:
+            check_path(VESKTOP_THEME_PATH, theme_file_name)
+            VESKTOP_THEME_PATH = os.path.join(VESKTOP_THEME_PATH, theme_file_name)
+    else:
+        check_path(VESKTOP_THEME_PATH)
+        VESKTOP_THEME_PATH = os.path.join(VESKTOP_THEME_PATH, theme_file_name)
 
     if args.image:
         colors = hex_to_rgb_map(map_colors(get_colors_pywal(args.image)))
     else:
         colors = hex_to_rgb_map(map_colors(get_colors_json()))
-    theme_path = args.theme
-    theme_file_name = os.path.basename(theme_path)
     theme_text = ""
     with open(theme_path, "r") as theme_file:
         theme_lines = theme_file.readlines()
@@ -147,7 +182,7 @@ def main():
         i = replace_key(i)
         theme_text += i
 
-    with open(os.path.join(VESKTOP_THEME_PATH, theme_file_name), "w+") as file:
+    with open(VESKTOP_THEME_PATH, "w+") as file:
         file.write(theme_text)
 
 if __name__ == "__main__":
