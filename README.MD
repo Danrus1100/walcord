@@ -54,8 +54,8 @@ walcord -i <path/to/image> -t <path/to/theme>
 ![another_image](images/midnight_2.png)
 
 ### ToDo
-- [ ] `--image` optional (*in progress*)
-- [ ] `--save-path` argument (saving a file to a specific path and name)
+- [x] `--image` optional
+- [x] `--output` argument (saving a file to a specific path and name)
 - [ ] simple dark and colored theme
 - [ ] `--theme` optional (use simple dark/colored theme)
 - [ ] windows support
