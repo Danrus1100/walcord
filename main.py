@@ -119,8 +119,6 @@ def replace_key(text: str) -> str:
     """
     return re.sub(r'KEY\((\w+)(?:,\s*(0\.\d+))?\)', remap_key, text)
 
-# мне нужна функция которая будет принимать строку с путем до дириктории или файла, и если таковой не существует, то создавать его
-
 def check_path(path: str, file_name: str = "") -> None:
     """
     Checks if the path exists and if not creates it.
