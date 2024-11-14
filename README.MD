@@ -38,9 +38,9 @@ you can also set the transparency of the color from 0 to 1 and use short names:
 All names of colors and they short vesions:
  - **background: b**
  - **foreground: f**
- - **border: br**
- - **text: t**
- - **accent: a**
+ - **border: br (color 2)**
+ - **text: t (color 15)**
+ - **accent: a (color 13)**
 
 
 After that, you can use this theme in walcord:

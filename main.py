@@ -89,6 +89,60 @@ def hex_to_rgb_map(colors: dict) -> dict:
         returned[color] = tuple(int(colors[color].lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
     return returned
 
+def return_rgba(color_tuple, opacity):
+    return f"rgba({color_tuple[0]}, {color_tuple[1]}, {color_tuple[2]}, {opacity})"
+
+def return_values(color_tuple, opacity):
+    return f"{color_tuple[0]}, {color_tuple[1]}, {color_tuple[2]}, {opacity}"
+
+def return_values_without_opacity(color_tuple, opacity):
+    return f"{color_tuple[0]}, {color_tuple[1]}, {color_tuple[2]}"
+
+def return_red(color_tuple, opacity):
+    return f"{color_tuple[0]}"
+
+def return_green(color_tuple, opacity):
+    return f"{color_tuple[1]}"
+
+def return_blue(color_tuple, opacity):
+    return f"{color_tuple[2]}"
+
+def return_opacity(color_tuple, opacity):
+    return f"{opacity}"
+
+def return_hex(color_tuple, opacity):
+    return f"#{color_tuple[0]:02x}{color_tuple[1]:02x}{color_tuple[2]:02x}"
+
+def return_hex_values(color_tuple, opacity):
+    return f"{color_tuple[0]:02x}{color_tuple[1]:02x}{color_tuple[2]:02x}"
+
+MODIFIER_HANDLERS = {
+    '.values': return_values,
+    '.v': return_values,
+
+    '.values.no_opacity': return_values_without_opacity,
+    '.v.n': return_values_without_opacity,
+
+    '.values.hex': return_hex_values,
+    '.v.h': return_hex_values,
+
+    '.hex': return_hex,
+
+    '.rgba': return_rgba,
+
+    '.r': return_rgba,
+    '.red': return_red,
+
+    '.g': return_green,
+    '.green': return_green,
+
+    '.b': return_blue,
+    '.blue': return_blue,
+
+    '.o': return_opacity,
+    '.opacity': return_opacity,
+}
+
 def remap_key(match) -> str:
     """
     Remaps the key to the css rgba format.
@@ -99,14 +153,18 @@ def remap_key(match) -> str:
     global colors
 
     first_arg = match.group(1).lower()
-    first_arg = f"{colors[first_arg][0]}, {colors[first_arg][1]}, {colors[first_arg][2]}"
+    first_arg_values = colors.get(first_arg)
+    if not first_arg_values:
+        raise ValueError(f"Цвет '{first_arg}' не найден в словаре colors.")
 
     second_arg = match.group(2)
-    if second_arg:
-        second_arg = str(float(second_arg))
-    else:
-        second_arg = '1'
-    return f'rgba({first_arg}, {second_arg})'
+    opacity = float(second_arg) if second_arg else 1.0
+
+    modifier = match.group(3)
+
+    if modifier and modifier in MODIFIER_HANDLERS:
+        return MODIFIER_HANDLERS[modifier](first_arg_values, opacity)
+    return return_rgba(first_arg_values, opacity)
 
 def replace_key(text: str) -> str:
     """
@@ -117,7 +175,7 @@ def replace_key(text: str) -> str:
     :return: The text with the key replaced.
     :rtype: str
     """
-    return re.sub(r'KEY\((\w+)(?:,\s*(0\.\d+))?\)', remap_key, text)
+    return re.sub(r'KEY\((\w+)(?:,\s*(0\.\d+))?\)(\.\w+)?', remap_key, text)
 
 def check_path(path: str, file_name: str = "") -> None:
     """
