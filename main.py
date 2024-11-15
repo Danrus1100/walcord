@@ -5,8 +5,12 @@ import sys
 import re
 import json
 
-HOME_PATH = os.environ['HOME']
-VESKTOP_THEME_PATH = os.path.join(HOME_PATH, ".config/vesktop/themes")
+if os.name == 'posix':
+    HOME_PATH = os.environ['HOME']
+    VESKTOP_THEME_PATH = os.path.join(HOME_PATH, ".config/vesktop/themes")
+elif os.name == 'nt':
+    HOME_PATH = os.environ['USERPROFILE']
+    VESKTOP_THEME_PATH = os.path.join(HOME_PATH, "AppData/Roaming/Vencord/themes")
 DEFAULT_THEME = """
 /**
  * @name Walcord Default Theme
