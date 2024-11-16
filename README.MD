@@ -1,5 +1,5 @@
 # Walcord - (Pywal)ing *every* themes for Vesktop
-![image](images/default.png)
+![image](images/demo.gif)
 
 ## How to install from [releases](https://github.com/Danrus1100/walcord/releases):
 1. Download a binary file
