@@ -197,8 +197,7 @@ def remap_key(match) -> str:
     first_arg = match.group(1).lower()
     first_arg_values = colors.get(first_arg)
     if not first_arg_values:
-        raise ValueError(f"Цвет '{first_arg}' не найден в словаре colors.")
-
+        raise ValueError(f"Color '{first_arg}' not found in the colors dictionary.")
     second_arg = match.group(2)
     opacity = float(second_arg) if second_arg else 1.0
 
