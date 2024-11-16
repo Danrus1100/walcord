@@ -50,6 +50,11 @@ Walcord doesn't care what type of file is given to it, so it can be used in many
 walcord -t <path-to-some-file.txt> -o <path-and/or-name-a-new-file>
 ```
 
+You can also use the image you want, from which the colors will be taken, using `--image`:
+```bash
+walcord -i <path-to-image>
+```
+
 ## KEY's syntax
 
 KEY() can take `background`, `foreground` and numbers from 0 to 15 as the first argument:
