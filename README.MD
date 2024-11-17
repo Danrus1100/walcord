@@ -75,11 +75,11 @@ you can also set the transparency of the color from 0 to 1 and use short names:
 <details>
 <summary>All names of colors and they short vesions (click me)</summary>
 
- - **background: b**
- - **foreground: f**
- - **border: br (color 2)**
- - **text: t (color 15)**
- - **accent: a (color 13)**
+ - `background: b`
+ - `foreground: f`
+ - `border: br (color 2)`
+ - `text: t (color 15)`
+ - `accent: a (color 13)`
 </details>
 
 If you only want values from KEY, individual colors, or HEX format, you can use the output parameters:
