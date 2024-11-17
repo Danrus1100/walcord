@@ -98,10 +98,8 @@ def map_colors(colors: dict) -> dict:
     :type colors: dict
     """
     return {
-        # "background": colors["special"]["background"],
-        # "foreground": colors["special"]["foreground"],
-        "background": colors["colors"]["color0"],
-        "foreground": colors["colors"]["color15"],
+        "background": colors["special"]["background"],
+        "foreground": colors["special"]["foreground"],
         "0": colors["colors"]["color0"],
         "1": colors["colors"]["color1"],
         "2": colors["colors"]["color2"],
@@ -126,8 +124,7 @@ def map_colors(colors: dict) -> dict:
 
         # short names
         "b": colors["special"]["background"], 
-        # "b": colors["special"]["background"], 
-        # "f": colors["special"]["foreground"],
+        "f": colors["special"]["foreground"],
         "br": colors["colors"]["color2"],
         "t": colors["colors"]["color15"],
         "a": colors["colors"]["color13"],
