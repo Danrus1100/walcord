@@ -5,12 +5,14 @@ import sys
 import re
 import json
 
-if os.name == 'posix':
+
+if os.name == 'posix': # Linux
     HOME_PATH = os.environ['HOME']
     VESKTOP_THEME_PATH = os.path.join(HOME_PATH, ".config/vesktop/themes")
-elif os.name == 'nt':
+elif os.name == 'nt': # Windows
     HOME_PATH = os.environ['USERPROFILE']
     VESKTOP_THEME_PATH = os.path.join(HOME_PATH, "AppData/Roaming/Vencord/themes")
+    import ctypes
 DEFAULT_THEME = """
 /**
  * @name Walcord Default Theme
@@ -50,6 +52,17 @@ DEFAULT_THEME = """
 	--backgroundfloating: 		KEY(b).rgb_values;
 }
 """
+
+def get_windows_wallpaper() -> str:
+    """
+    Returns the path to the current wallpaper on Windows.
+
+    :return: The path to the current wallpaper.
+    :rtype: str
+    """
+    buffer = ctypes.create_unicode_buffer(512)
+    ctypes.windll.user32.SystemParametersInfoW(0x0073, 512, buffer, 0)
+    return buffer.value
 
 def get_colors_pywal(image_path: str) -> dict:
     """
@@ -257,7 +270,10 @@ def main():
 
     VESKTOP_THEME_PATH = args.output if args.output else os.path.join(VESKTOP_THEME_PATH, theme_file_name)
 
-    colors = get_colors_pywal(args.image) if args.image else get_colors_json()
+    if os.name == 'posix':
+        colors = get_colors_pywal(args.image) if args.image else get_colors_json()
+    elif os.name == 'nt':
+        colors = get_colors_pywal(args.image) if args.image else get_colors_pywal(get_windows_wallpaper())
     colors = hex_to_rgb_map(map_colors(colors))
 
     for i in range(len(theme_lines)):
