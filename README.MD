@@ -129,7 +129,7 @@ If you only want values from KEY, individual colors, or HEX format, you can use 
 - [x] `--output` argument (saving a file to a specific path and name)
 - [x] simple theme
 - [x] `--theme` optional (use simple theme)
-- [ ] windows support
+- [x] windows support
 
 ### Special thanks
  - [danihek/Themecord](https://github.com/danihek/Themecord): The Ideological mastermind
