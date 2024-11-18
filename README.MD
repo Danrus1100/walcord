@@ -15,7 +15,7 @@ git clone https://github.com/Danrus1100/walcord.git
 cd walcord
 python -m venv .venv/
 source .venv/bin/activate 
-pip install -r requirements.txt --upgrade
+pip install -r requirements-<your-system>.txt --upgrade
 pyinstaller walcord.spec
 ./dist/walcord
 ```
