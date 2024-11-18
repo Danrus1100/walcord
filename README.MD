@@ -2,12 +2,18 @@
 ![image](images/demo.gif)
 
 ## How to install from [releases](https://github.com/Danrus1100/walcord/releases):
-1. Download a binary file
-2. copy in /usr/bin/ directory:
+#### Linux:
+1. Download Pywal (I recommend downloading [pywal-git](https://aur.archlinux.org/packages/pywal-git) from AUR, because it installs imagemagick right away.)
+2. Download a [binary](https://github.com/Danrus1100/walcord/releases/download/2.3/walcord) file
+3. Сopy in /usr/bin/ directory:
 ```bash
 sudo cp <path_to>/walcord /usr/bin
 walcord
 ```
+#### Windows
+1. Download [ImageMagick](https://imagemagick.org/script/download.php#windows)
+2. Download [walcord.exe](https://github.com/Danrus1100/walcord/releases/download/2.3/walcord.exe)
+2. Сopy wherever you want 
 
 ## How to build frome source:
 ```bash
