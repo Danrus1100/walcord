@@ -265,15 +265,12 @@ def main():
     theme_file_name = os.path.basename(theme_path) if theme_path else "walcord.theme.css"
     theme_lines = open(theme_path, "r+").readlines() if theme_path else DEFAULT_THEME.split("\n")
 
-    if args.output:
-        check_path(args.output)
+    if args.output: check_path(args.output)
 
     VESKTOP_THEME_PATH = args.output if args.output else os.path.join(VESKTOP_THEME_PATH, theme_file_name)
 
-    if os.name == 'posix':
-        colors = get_colors_pywal(args.image) if args.image else get_colors_json()
-    elif os.name == 'nt':
-        colors = get_colors_pywal(args.image) if args.image else get_colors_pywal(get_windows_wallpaper())
+    if os.name == 'posix': colors = get_colors_pywal(args.image) if args.image else get_colors_json()
+    elif os.name == 'nt': colors = get_colors_pywal(args.image) if args.image else get_colors_pywal(get_windows_wallpaper())
     colors = hex_to_rgb_map(map_colors(colors))
 
     for i in range(len(theme_lines)):
@@ -282,13 +279,14 @@ def main():
             break
     
     theme_text = ""
-    for i in theme_lines:
-        i = replace_key(i)
-        i += "\n" if not args.theme else ""
-        theme_text += i
+    if not args.theme:
+        for i in theme_lines:
+            theme_text += replace_key(i) + "\n"
+    else:
+        for i in theme_lines:
+            theme_text += replace_key(i)
 
-    with open(VESKTOP_THEME_PATH, "w+") as file:
-        file.write(theme_text)
+    with open(VESKTOP_THEME_PATH, "w+") as file: file.write(theme_text)
 
 if __name__ == "__main__":
     main()
