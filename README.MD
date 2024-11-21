@@ -132,4 +132,4 @@ If you only want values from KEY, individual colors, or HEX format, you can use 
 - [x] windows support
 
 ### Special thanks
- - [danihek/Themecord](https://github.com/danihek/Themecord): The Ideological mastermind
+ - [danihek/Themecord](https://github.com/danihek/Themecord): The mastermind
