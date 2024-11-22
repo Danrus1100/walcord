@@ -259,6 +259,8 @@ def main():
     parser.add_argument("--image", "-i", type=str, help="The path to the image to generate colors from.", required=False)
     parser.add_argument("--theme", "-t", type=str, help="The path to the theme file to replace colors in.", required=False)
     parser.add_argument("--output", "-o", type=str, help="The path to the output file. default: ~/.config/vesktop/themes/", required=False)
+    #parser.add_argument("--service", "-s", type=bool, help="Work as a service.", required=False)
+    parser.add_argument("--version", "-v", action="version", version="2.3.0")
     args = parser.parse_args()
     
     theme_path = args.theme if args.theme else None
