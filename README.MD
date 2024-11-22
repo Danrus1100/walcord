@@ -124,6 +124,9 @@ If you only want values from KEY, individual colors, or HEX format, you can use 
  - [Midnight](https://github.com/Danrus1100/walcord/blob/main/examples/midnight.css):
 ![midnight theme](images/midnight_1.png)
 
+- [System24](https://github.com/Danrus1100/walcord/blob/main/examples/system24.css):
+![system24 theme](images/system24.png)
+
 ### ToDo
 - [x] `--image` optional
 - [x] `--output` argument (saving a file to a specific path and name)
@@ -132,4 +135,4 @@ If you only want values from KEY, individual colors, or HEX format, you can use 
 - [x] windows support
 
 ### Special thanks
- - [danihek/Themecord](https://github.com/danihek/Themecord): The mastermind
+ - [danihek/Themecord](https://github.com/danihek/Themecord): The Mastermind
