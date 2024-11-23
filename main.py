@@ -24,32 +24,63 @@ DEFAULT_THEME = """
 
 @import url(https://mwittrien.github.io/BetterDiscordAddons/Themes/DiscordRecolor/DiscordRecolor.css);
 
-
 :root {
 	--settingsicons:		0;
 	--font:				"gg sans", "Noto Sans";												
-	
-	--accentcolor: 			KEY(a).rgb_values;
-	--accentcolor2: 		KEY(a).rgb_values;
-	--linkcolor: 			KEY(14).rgb_values;
-	--mentioncolor: 		KEY(5).rgb_values;
-	--successcolor: 		59,165,92;
-	--warningcolor: 		250,166,26;
-	--dangercolor:  		237,66,69;
-	
-	--textbrightest: 		KEY(t).rgb_values;
-	--textbrighter: 		KEY(14).rgb_values;
-	--textbright: 			KEY(t).rgb_values;
-	--textdark: 			KEY(15).rgb_values;
-	--textdarker: 			KEY(13).rgb_values;
-	--textdarkest: 			KEY(13).rgb_values;
-	
-	--backgroundaccent: 		KEY(b).rgb_values;
-	--backgroundprimary: 		KEY(b).rgb_values;
-	--backgroundsecondary: 		KEY(b).rgb_values;
-	--backgroundsecondaryalt: 	KEY(b).rgb_values;
-	--backgroundtertiary: 		KEY(b).rgb_values;
-	--backgroundfloating: 		KEY(b).rgb_values;
+}
+
+.theme-dark {
+	/* Accent Colors */
+	--accentcolor: KEY(A).rgb_values;
+	--accentcolor2: KEY(A).rgb_values;
+	--linkcolor: KEY(BR).rgb_values;
+	--mentioncolor: KEY(A).rgb_values;
+	--successcolor: 59,165,92;
+	--warningcolor: 250,166,26;
+	--dangercolor: 237,66,69;
+
+	/* Text Colors */
+	--textbrightest: KEY(T).rgb_values;
+	--textbrighter: KEY(T).rgb_values;
+	--textbright: KEY(T).rgb_values;
+	--textdark: KEY(T).rgb_values;
+	--textdarker: KEY(T).rgb_values;
+	--textdarkest: KEY(13).rgb_values;
+
+	/* Background Colors */
+	--backgroundaccent: KEY(B, 0.6).rgb_values;
+	--backgroundprimary: KEY(B).rgb_values;
+	--backgroundsecondary: KEY(B).rgb_values;
+	--backgroundsecondaryalt: KEY(B).rgb_values;
+	--backgroundtertiary: rgba(0, 0, 0, 0.05);
+	--backgroundfloating: hsla(220, 20%, 40%, 0.2);
+}
+
+.theme-light {
+	/* Accent Colors */
+	--accentcolor: KEY(8).rgb_values;
+	--accentcolor2: KEY(8).rgb_values;
+	--linkcolor: KEY(A).rgb_values;
+	--mentioncolor: KEY(B).rgb_values;
+	--successcolor: 59,165,92;
+	--warningcolor: 250,166,26;
+	--dangercolor: 237,66,69;
+
+	/* Text Colors */
+	--textbrightest: KEY(T).rgb_values;
+	--textbrighter: KEY(T).rgb_values;
+	--textbright: KEY(T).rgb_values;
+	--textdark: KEY(T).rgb_values;
+	--textdarker: KEY(T).rgb_values;
+	--textdarkest: KEY(13).rgb_values;
+
+	/* Background Colors */
+	--backgroundaccent: KEY(BR, 0.6).rgb_values;
+	--backgroundprimary: KEY(BR).rgb_values;
+	--backgroundsecondary: KEY(BR).rgb_values;
+	--backgroundsecondaryalt: KEY(BR).rgb_values;
+	--backgroundtertiary: rgba(0, 0, 0, 0.05);
+	--backgroundfloating: hsla(220, 20%, 40%, 0.2);
 }
 """
 
