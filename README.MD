@@ -44,9 +44,9 @@ script will replace the KEY with the css color code in rgba format:
 ```
 The KEY syntax will be discussed in more detail [here](#keys-syntax)
 
-After that, you can use this theme in walcord:
+After that, you can use this theme (or folder with themes) in walcord:
 ```bash
-walcord -t <path/to/theme>
+walcord -t <path/to/themes>
 ```
 
 ### 3 Use for other applications

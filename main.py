@@ -13,10 +13,10 @@ logging.getLogger().handlers[0].setFormatter(logging.Formatter('%(asctime)s (%(l
 
 if os.name == 'posix': # Linux
     HOME_PATH = os.environ['HOME']
-    VESKTOP_THEME_PATH = os.path.join(HOME_PATH, ".config/vesktop/themes")
+    ORIGIN_VESKTOP_THEME_PATH = os.path.join(HOME_PATH, ".config/vesktop/themes")
 elif os.name == 'nt': # Windows
     HOME_PATH = os.environ['USERPROFILE']
-    VESKTOP_THEME_PATH = os.path.join(HOME_PATH, "AppData/Roaming/Vencord/themes")
+    ORIGIN_VESKTOP_THEME_PATH = os.path.join(HOME_PATH, "AppData/Roaming/Vencord/themes")
 DEFAULT_THEME = """
 /**
  * @name Walcord Default Theme
@@ -95,7 +95,7 @@ def get_windows_wallpaper() -> str:
     :return: The path to the current wallpaper.
     :rtype: str
     """
-    logging.info("getting wallpaper path...")
+    logging.info("(walcord) getting wallpaper path...")
     buffer = ctypes.create_unicode_buffer(512)
     ctypes.windll.user32.SystemParametersInfoW(0x0073, 512, buffer, 0)
     return buffer.value
@@ -109,7 +109,7 @@ def get_colors_pywal(image_path: str) -> dict:
     :return: A dictionary of colors in the format of pywal.
     :rtype: dict
     """
-    logging.info(f"getting colors from image: {image_path}")
+    logging.info(f"(walcord) getting colors from image: {image_path}")
     return pywal.colors.get(image_path)
 
 def get_colors_json() -> dict:
@@ -119,10 +119,10 @@ def get_colors_json() -> dict:
     :return: A dictionary of colors in the format of pywal.
     :rtype: dict
     """
-    logging.info("getting colors from json (~/.cache/wal/colors.json)...")
+    logging.info("(walcord) getting colors from json (~/.cache/wal/colors.json)...")
     cache_file = os.path.join(HOME_PATH, ".cache/wal/colors.json")
     if not os.path.exists(cache_file):
-        logging.error("Error: No cached colors found. Run pywal first or use --image <image_path>.")
+        logging.error("(walcord) Error: No cached colors found. Run pywal first or use --image <image_path>.")
         sys.exit(-1)
 
     with open(cache_file) as f:
@@ -277,23 +277,45 @@ def check_path(path: str, file_name: str = "") -> None:
     :param file_name: The name of the file to create if name dosent given.
     :type path: str
     """
+    if "~" in path: path = path.replace("~", HOME_PATH)
     if not os.path.exists(path):
-        logging.info(f"Path not found: {path}")
+        logging.info(f"(walcord) Path not found: {path}")
         if "." in path:
-            logging.info(f"Creating file: {path}")
+            if len(theme_files_paths) > 1:
+                logging.error(f"(walcord) Error: You can't use multiple theme files with a single output file.")
+                sys.exit(-1)
+            logging.info(f"(walcord) Creating file: {path}")
             try:
                 with open(path, "w+") as f:
                     pass
             except IsADirectoryError:
-                logging.error(f"Path is a directory: {path}. Output path should be a file path.")
+                logging.error(f"(walcord) Path is a directory: {path}. Output path should be a file path.")
                 sys.exit(-1)
         else:
-            logging.info(f"Creating directory: {path}")
+            logging.info(f"(walcord) Creating directory: {path}")
             os.makedirs(path)
             if file_name != "":
                 with open(os.path.join(path, file_name), "w+") as f:
                     pass
-    logging.info(f"Path checked: {path}")
+    logging.info(f"(walcord) Path checked: {path}")
+
+theme_files_paths = []
+
+def check_themes(theme: str) -> None:
+    logging.info(f"(walcord) checking theme path: {theme}")
+    if "~" in theme: theme = theme.replace("~", HOME_PATH)
+    if "." in theme:
+        if not os.path.exists(theme):
+            logging.error(f"(walcord) Error: Theme file not found: {theme}")
+            sys.exit(-1)
+        else:
+            theme_files_paths.append(theme)
+    else:
+        if os.path.exists(theme):
+            for root, dirs, files in os.walk(theme):
+                for file in files:
+                    theme_files_paths.append(os.path.join(root, file))
+    logging.info(f"(walcord) founded {len(theme_files_paths)} theme files.")
 
 colors = {}
 
@@ -311,38 +333,51 @@ def main():
     args = parser.parse_args()
 
     if args.quiet: logging.getLogger().setLevel(logging.ERROR)
-    
-    theme_path = args.theme if args.theme else None
-    theme_file_name = os.path.basename(theme_path) if theme_path else "walcord.theme.css"
-    theme_lines = open(theme_path, "r+").readlines() if theme_path else DEFAULT_THEME.split("\n")
 
-    if args.output: 
-        logging.info(f"checking output path: {args.output}")
-        check_path(args.output)
-
-    VESKTOP_THEME_PATH = args.output if args.output else os.path.join(VESKTOP_THEME_PATH, theme_file_name)
-
-    logging.info(f"gettings colors...")
+    logging.info(f"(walcord) gettings colors...")
     if os.name == 'posix': colors = get_colors_pywal(args.image) if args.image else get_colors_json()
     elif os.name == 'nt': colors = get_colors_pywal(args.image) if args.image else get_colors_pywal(get_windows_wallpaper())
     colors = hex_to_rgb_map(map_colors(colors))
-
-    logging.info(f"start to generate theme file...")
-    for i in range(len(theme_lines)):
-        if "@description" in theme_lines[i]:
-            theme_lines[i] = " * @description Generated by Walcord\n"
-            break
     
-    theme_text = ""
-    if not args.theme:
-        for i in theme_lines:
-            theme_text += replace_key(i) + "\n"
-    else:
-        for i in theme_lines:
-            theme_text += replace_key(i)
+    if args.theme: 
+        check_themes(args.theme)
+    else: 
+        theme_files_paths.append("DEFAULT_THEME")
+
+    if args.output: 
+        logging.info(f"(walcord) checking output path: {args.output}")
+        check_path(args.output)
+
+    for theme_file in theme_files_paths:
+        VESKTOP_THEME_PATH = ORIGIN_VESKTOP_THEME_PATH
+        logging.info(f"(walcord) working on the file: {theme_file}")
+        if theme_file == "DEFAULT_THEME":
+            theme_lines = DEFAULT_THEME.split("\n")
+            theme_file_name = "walcord.theme.css"
+        else:
+            theme_file_name = os.path.basename(theme_file)
+            theme_lines = open(theme_file, "r+").readlines()
+
+        VESKTOP_THEME_PATH = args.output if args.output else os.path.join(VESKTOP_THEME_PATH, theme_file_name)
+
+        logging.info(f"(walcord) start to generate theme file...")
+        for i in range(len(theme_lines)):
+            if "@description" in theme_lines[i]:
+                theme_lines[i] = " * @description Generated by Walcord\n"
+                break
         
-    logging.info(f"writing theme file to: {VESKTOP_THEME_PATH}")
-    with open(VESKTOP_THEME_PATH, "w+") as file: file.write(theme_text)
+        theme_text = ""
+        if not args.theme:
+            for i in theme_lines:
+                theme_text += replace_key(i) + "\n"
+        else:
+            for i in theme_lines:
+                theme_text += replace_key(i)
+            
+        logging.info(f"(walcord) writing theme file to: {VESKTOP_THEME_PATH}")
+        with open(VESKTOP_THEME_PATH, "w+") as file: file.write(theme_text)
+        logging.info(f"(walcord) {VESKTOP_THEME_PATH} generated successfully.")
+    logging.info("(walcord) DONE.")
 
 if __name__ == "__main__":
     main()
