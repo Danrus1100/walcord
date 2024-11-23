@@ -127,6 +127,9 @@ If you only want values from KEY, individual colors, or HEX format, you can use 
 - [System24](https://github.com/Danrus1100/walcord/blob/main/examples/system24.css):
 ![system24 theme](images/system24.png)
 
+- [Themecord](https://github.com/Danrus1100/walcord/blob/main/examples/themecord.css):
+![themecord theme](images/themecord.png)
+
 ### ToDo
 - [x] `--image` optional
 - [x] `--output` argument (saving a file to a specific path and name)
