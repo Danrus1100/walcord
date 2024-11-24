@@ -6,6 +6,7 @@ import re
 import json
 import logging
 import ctypes
+import select
 
 logging.basicConfig(level=logging.INFO)
 logging.getLogger().handlers[0].setFormatter(logging.Formatter('%(asctime)s (%(levelname)s) - %(message)s'))
@@ -17,6 +18,7 @@ if os.name == 'posix': # Linux
 elif os.name == 'nt': # Windows
     HOME_PATH = os.environ['USERPROFILE']
     ORIGIN_VESKTOP_THEME_PATH = os.path.join(HOME_PATH, "AppData/Roaming/Vencord/themes")
+IS_STDIN = select.select([sys.stdin], [], [], 0.0)[0]
 DEFAULT_THEME = """
 /**
  * @name Walcord Default Theme
@@ -280,7 +282,7 @@ def check_path(path: str, file_name: str = "") -> None:
     if "~" in path: path = path.replace("~", HOME_PATH)
     if not os.path.exists(path):
         logging.info(f"(walcord) Path not found: {path}")
-        if "." in path:
+        if "." in path[1:]:
             if len(theme_files_paths) > 1:
                 logging.error(f"(walcord) Error: You can't use multiple theme files with a single output file.")
                 sys.exit(-1)
@@ -302,9 +304,15 @@ def check_path(path: str, file_name: str = "") -> None:
 theme_files_paths = []
 
 def check_themes(theme: str) -> None:
+    """
+    Checks if the theme file exists and make a list of theme files.
+
+    :param theme: The path to the theme file to check.
+    :type theme: str
+    """
     logging.info(f"(walcord) checking theme path: {theme}")
     if "~" in theme: theme = theme.replace("~", HOME_PATH)
-    if "." in theme:
+    if "." in theme[1:]:
         if not os.path.exists(theme):
             logging.error(f"(walcord) Error: Theme file not found: {theme}")
             sys.exit(-1)
@@ -322,14 +330,16 @@ colors = {}
 def main():
     global colors
     global VESKTOP_THEME_PATH
+    global IS_STDIN
 
     parser = argparse.ArgumentParser(description="Create a theme file from pywal colors.")
     parser.add_argument("--image", "-i", type=str, help="The path to the image to generate colors from.", required=False)
     parser.add_argument("--theme", "-t", type=str, help="The path to the theme file to replace colors in.", required=False)
     parser.add_argument("--output", "-o", type=str, help="The path to the output file. default: ~/.config/vesktop/themes/", required=False)
     parser.add_argument("--quiet", "-q", action="store_true", help="Don't print anything.", required=False)
+    parser.add_argument("--extention", "-e", type=str, help="The extention of the theme file, if you use stdin. (default: '.css')", required=False)
     #parser.add_argument("--service", "-s", type=bool, help="Work as a service.", required=False)
-    parser.add_argument("--version", "-v", action="version", version="2.4.0")
+    parser.add_argument("--version", "-v", action="version", version="2.5.0")
     args = parser.parse_args()
 
     if args.quiet: logging.getLogger().setLevel(logging.ERROR)
@@ -338,11 +348,20 @@ def main():
     if os.name == 'posix': colors = get_colors_pywal(args.image) if args.image else get_colors_json()
     elif os.name == 'nt': colors = get_colors_pywal(args.image) if args.image else get_colors_pywal(get_windows_wallpaper())
     colors = hex_to_rgb_map(map_colors(colors))
-    
-    if args.theme: 
-        check_themes(args.theme)
-    else: 
-        theme_files_paths.append("DEFAULT_THEME")
+
+    if IS_STDIN:
+        if args.theme:
+            logging.error("(walcord) Error: You can't use stdin with --theme.")
+            sys.exit(-1)
+        logging.info("(walcord) getting data from stdin...")
+        stdin_data = sys.stdin.read().split("\n")
+        theme_files_paths.append("STDIN_THEME")
+
+    else:
+        if args.theme: 
+            check_themes(args.theme)
+        else: 
+            theme_files_paths.append("DEFAULT_THEME")
 
     if args.output: 
         logging.info(f"(walcord) checking output path: {args.output}")
@@ -354,11 +373,20 @@ def main():
         if theme_file == "DEFAULT_THEME":
             theme_lines = DEFAULT_THEME.split("\n")
             theme_file_name = "walcord.theme.css"
+        elif theme_file == "STDIN_THEME":
+            theme_lines = stdin_data
+            theme_file_name = "stdin.walcord.theme.css"
+            for i in range(len(theme_lines)):
+                if "@name" in theme_lines[i]:
+                    theme_file_name = theme_lines[i].split(" ")[-1].strip()
+                    theme_file_name += ".css" if not args.extention else args.extention
+
         else:
             theme_file_name = os.path.basename(theme_file)
             theme_lines = open(theme_file, "r+").readlines()
 
         VESKTOP_THEME_PATH = args.output if args.output else os.path.join(VESKTOP_THEME_PATH, theme_file_name)
+        if not "." in VESKTOP_THEME_PATH[1:]: VESKTOP_THEME_PATH = os.path.join(VESKTOP_THEME_PATH, theme_file_name)
 
         logging.info(f"(walcord) start to generate theme file...")
         for i in range(len(theme_lines)):
