@@ -12,7 +12,7 @@ walcord
 ```
 #### Windows
 1. Download [ImageMagick](https://imagemagick.org/script/download.php#windows)
-2. Download [walcord.exe](https://github.com/Danrus1100/walcord/releases/download/2.3/walcord.exe)
+2. Download [walcord.exe](https://github.com/Danrus1100/walcord/releases/download/2.5/walcord.exe)
 2. Сopy wherever you want 
 
 ## How to build frome source:
