@@ -15,10 +15,11 @@ logging.getLogger().handlers[0].setFormatter(logging.Formatter('%(asctime)s (%(l
 if os.name == 'posix': # Linux
     HOME_PATH = os.environ['HOME']
     ORIGIN_VESKTOP_THEME_PATH = os.path.join(HOME_PATH, ".config/vesktop/themes")
+    IS_STDIN = select.select([sys.stdin], [], [], 0.0)[0]
 elif os.name == 'nt': # Windows
     HOME_PATH = os.environ['USERPROFILE']
     ORIGIN_VESKTOP_THEME_PATH = os.path.join(HOME_PATH, "AppData/Roaming/Vencord/themes")
-IS_STDIN = select.select([sys.stdin], [], [], 0.0)[0]
+    IS_STDIN = False
 DEFAULT_THEME = """
 /**
  * @name Walcord Default Theme
