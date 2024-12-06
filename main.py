@@ -115,20 +115,19 @@ def get_colors_pywal(image_path: str) -> dict:
     logging.info(f"(walcord) getting colors from image: {image_path}")
     return pywal.colors.get(image_path)
 
-def get_colors_json() -> dict:
+def get_colors_json(path:str = os.path.join(HOME_PATH, ".cache/wal/colors.json")) -> dict:
     """
     Returns a dictionary of colors from the pywal json file.
 
     :return: A dictionary of colors in the format of pywal.
     :rtype: dict
     """
-    logging.info("(walcord) getting colors from json (~/.cache/wal/colors.json)...")
-    cache_file = os.path.join(HOME_PATH, ".cache/wal/colors.json")
-    if not os.path.exists(cache_file):
+    logging.info(f"(walcord) getting colors from json ({path})...")
+    if not os.path.exists(path):
         logging.error("(walcord) Error: No cached colors found. Run pywal first or use --image <image_path>.")
         sys.exit(-1)
 
-    with open(cache_file) as f:
+    with open(path) as f:
         return json.load(f)
 
 def map_colors(colors: dict) -> dict:
@@ -339,15 +338,19 @@ def main():
     parser.add_argument("--output", "-o", type=str, help="The path to the output file. default: ~/.config/vesktop/themes/", required=False)
     parser.add_argument("--quiet", "-q", action="store_true", help="Don't print anything.", required=False)
     parser.add_argument("--extention", "-e", type=str, help="The extention of the theme file, if you use stdin. (default: '.css')", required=False)
+    parser.add_argument("--json", "-j", type=str, help="colors.json file with pywal colors", required=False)
     #parser.add_argument("--service", "-s", type=bool, help="Work as a service.", required=False)
-    parser.add_argument("--version", "-v", action="version", version="2.5.0")
+    parser.add_argument("--version", "-v", action="version", version="2.6.0")
     args = parser.parse_args()
 
     if args.quiet: logging.getLogger().setLevel(logging.ERROR)
 
     logging.info(f"(walcord) gettings colors...")
-    if os.name == 'posix': colors = get_colors_pywal(args.image) if args.image else get_colors_json()
-    elif os.name == 'nt': colors = get_colors_pywal(args.image) if args.image else get_colors_pywal(get_windows_wallpaper())
+    if args.json:
+        colors = get_colors_json(args.json)
+    else:
+        if os.name == 'posix': colors = get_colors_pywal(args.image) if args.image else get_colors_json()
+        elif os.name == 'nt': colors = get_colors_pywal(args.image) if args.image else get_colors_pywal(get_windows_wallpaper())
     colors = hex_to_rgb_map(map_colors(colors))
 
     if IS_STDIN:
