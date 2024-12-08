@@ -3,7 +3,7 @@
 
 ## How to install from [releases](https://github.com/Danrus1100/walcord/releases):
 #### Linux:
-1. Download Pywal(https://github.com/dylanaraps/pywal) / [Hellwal](https://github.com/danihek/hellwal) / wallust(https://codeberg.org/onemoresuza/wallust)
+1. Download [Pywal](https://github.com/dylanaraps/pywal) / [Hellwal](https://github.com/danihek/hellwal) / [wallust](https://codeberg.org/onemoresuza/wallust)
 2. Download a [binary](https://github.com/Danrus1100/walcord/releases/download/2.6/walcord) file
 3. Сopy in /usr/bin/ directory:
 ```bash
