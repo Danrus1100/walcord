@@ -1,6 +1,16 @@
 # Walcord - (Pywal)ing *every* themes for Vencord/Vesktop/BeterDiscord
 ![image](images/demo.gif)
-
+## How to install from [AUR](https://aur.archlinux.org/packages/walcord)
+#### using yay:
+```bash
+yay -S walcord
+```
+#### using git:
+```bash
+git clone https://aur.archlinux.org/walcord.git
+cd walcord
+makepkg -si
+```
 ## How to install from [releases](https://github.com/Danrus1100/walcord/releases):
 #### Linux:
 1. Download [Pywal](https://github.com/dylanaraps/pywal) / [Hellwal](https://github.com/danihek/hellwal) / [wallust](https://codeberg.org/onemoresuza/wallust)
