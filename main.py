@@ -138,6 +138,7 @@ def map_colors(colors: dict) -> dict:
     :type colors: dict
     """
     return {
+        "wallpaper": colors["wallpaper"],
         "background": colors["special"]["background"],
         "foreground": colors["special"]["foreground"],
         "0": colors["colors"]["color0"],
@@ -168,6 +169,7 @@ def map_colors(colors: dict) -> dict:
         "br": colors["colors"]["color2"],
         "t": colors["colors"]["color15"],
         "a": colors["colors"]["color13"],
+        "w": colors["wallpaper"]
 
     }
 
@@ -182,7 +184,14 @@ def hex_to_rgb_map(colors: dict) -> dict:
     """
     returned = {}
     for color in colors:
-        returned[color] = tuple(int(colors[color].lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
+        try:
+            returned[color] = tuple(int(colors[color].lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
+        except ValueError:
+            if color == "wallpaper" or color == "w":
+                returned[color] = colors[color] # wallpaper path (expecting string)
+                continue
+            logging.warning(f"Param '{color}' is not a valid hex color. Skipping...")
+            continue
     return returned
 
 def return_rgba(color_tuple, opacity):
@@ -269,7 +278,7 @@ def replace_key(text: str) -> str:
     :return: The text with the key replaced.
     :rtype: str
     """
-    return re.sub(r'KEY\((\w+)(?:,\s*(0\.\d+))?\)(\.\w+)?', remap_key, text)
+    return re.sub(r'KEY\((\w+)(?:,\s*(0\.\d+))?\)(\.\w+)?', remap_key, text, flags=re.IGNORECASE)
 
 def check_path(path: str, file_name: str = "") -> None:
     """
@@ -341,7 +350,7 @@ def main():
     parser.add_argument("--json", "-j", type=str, help="colors.json file with pywal colors", required=False)
     parser.add_argument("--stdin", "-si", action="store_true", help="Read theme from stdin.", required=False)
     #parser.add_argument("--service", "-s", type=bool, help="Work as a service.", required=False)
-    parser.add_argument("--version", "-v", action="version", version="2.6.0")
+    parser.add_argument("--version", "-v", action="version", version="2.7.0")
     args = parser.parse_args()
 
     if args.quiet: logging.getLogger().setLevel(logging.ERROR)
