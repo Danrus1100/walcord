@@ -339,6 +339,7 @@ def main():
     parser.add_argument("--quiet", "-q", action="store_true", help="Don't print anything.", required=False)
     parser.add_argument("--extention", "-e", type=str, help="The extention of the theme file, if you use stdin. (default: '.css')", required=False)
     parser.add_argument("--json", "-j", type=str, help="colors.json file with pywal colors", required=False)
+    parser.add_argument("--stdin", "-s", action="store_true", help="Read theme from stdin.", required=False)
     #parser.add_argument("--service", "-s", type=bool, help="Work as a service.", required=False)
     parser.add_argument("--version", "-v", action="version", version="2.6.0")
     args = parser.parse_args()
@@ -353,7 +354,7 @@ def main():
         elif os.name == 'nt': colors = get_colors_pywal(args.image) if args.image else get_colors_pywal(get_windows_wallpaper())
     colors = hex_to_rgb_map(map_colors(colors))
 
-    if IS_STDIN:
+    if IS_STDIN and args.stdin:
         if args.theme:
             logging.error("(walcord) Error: You can't use stdin with --theme.")
             sys.exit(-1)
