@@ -1,4 +1,4 @@
-# Walcord - (Pywal)ing *every* themes for Vencord/Vesktop
+# Walcord - (Pywal)ing *every* themes for Vencord/Vesktop/BeterDiscord
 ![image](images/demo.gif)
 
 ## How to install from [releases](https://github.com/Danrus1100/walcord/releases):
