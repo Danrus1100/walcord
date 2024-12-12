@@ -339,7 +339,7 @@ def main():
     parser.add_argument("--quiet", "-q", action="store_true", help="Don't print anything.", required=False)
     parser.add_argument("--extention", "-e", type=str, help="The extention of the theme file, if you use stdin. (default: '.css')", required=False)
     parser.add_argument("--json", "-j", type=str, help="colors.json file with pywal colors", required=False)
-    parser.add_argument("--stdin", "-s", action="store_true", help="Read theme from stdin.", required=False)
+    parser.add_argument("--stdin", "-si", action="store_true", help="Read theme from stdin.", required=False)
     #parser.add_argument("--service", "-s", type=bool, help="Work as a service.", required=False)
     parser.add_argument("--version", "-v", action="version", version="2.6.0")
     args = parser.parse_args()
