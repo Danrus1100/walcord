@@ -78,6 +78,12 @@ You can also use the image you want, from which the colors will be taken, using 
 walcord -i <path-to-image>
 ```
 
+## Tips and Tricks:
+You can use the `--json` argument if you want to use a different palette creation backend, such as [Hellwal](https://github.com/danihek/hellwal): 
+```bash
+walcord -j ~/.cache/hellwal/colors.json
+```
+
 ## KEY's syntax
 
 KEY() can take `background`, `foreground` and numbers from 0 to 15 as the first argument:
