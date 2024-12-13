@@ -109,6 +109,7 @@ you can also set the transparency of the color from 0 to 1 and use short names:
  - `border: br (color 2)`
  - `text: t (color 15)`
  - `accent: a (color 13)`
+ - `wallpaper: w`
 </details>
 
 If you only want values from KEY, individual colors, or HEX format, you can use the output parameters:
@@ -125,13 +126,18 @@ If you only want values from KEY, individual colors, or HEX format, you can use 
  - `rgba` = `rgba(r, g, b, a)`
  - `rgb` = `rgba(r, g, b)`
  - `hex` = `#RRGGBB`
+ - `hsl` = `hsl(h, s, l)`
  - `rgba_values` = `r,g,b,a`
  - `rgb_values` = `r,g,b`
  - `hex_values` = `RRGGBB`
+ - `hsl_values` = `h, s, l`
  - `red / r` = `r`
  - `green / g` = `g`
  - `blue / b` = `b`
  - `opacity / o` = `a`
+ - `hue / h` = `h`
+ - `saturation / s` = `s`
+ - `lightness / l` = `l`
 
 </details>
 

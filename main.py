@@ -124,7 +124,7 @@ def get_colors_json(path:str = os.path.join(HOME_PATH, ".cache/wal/colors.json")
     """
     logging.info(f"(walcord) getting colors from json ({path})...")
     if not os.path.exists(path):
-        logging.error("(walcord) Error: No cached colors found. Run pywal first or use --image <image_path>.")
+        logging.error(f"(walcord) Error: {path} not found. Maybe you should run 'wal' first?")
         sys.exit(-1)
 
     with open(path) as f:
@@ -194,6 +194,34 @@ def hex_to_rgb_map(colors: dict) -> dict:
             continue
     return returned
 
+def rgb_to_hls(color: tuple) -> tuple:
+    """
+    Converts the given rgb color to hls.
+
+    :param color: The color to convert to hls.
+    :type color: tuple
+    :return: The color converted to hls.
+    :rtype: tuple
+    """
+    r, g, b = color
+    r, g, b = r / 255.0, g / 255.0, b / 255.0
+    maxc = max(r, g, b)
+    minc = min(r, g, b)
+    l = (maxc + minc) / 2.0
+    if maxc == minc:
+        h = s = 0.0
+    else:
+        d = maxc - minc
+        s = d / (2.0 - maxc - minc) if l > 0.5 else d / (maxc + minc)
+        if maxc == r:
+            h = (g - b) / d + (6.0 if g < b else 0.0)
+        elif maxc == g:
+            h = (b - r) / d + 2.0
+        else:
+            h = (r - g) / d + 4.0
+        h /= 6.0
+    return h, l, s
+
 def return_rgba(color_tuple, opacity):
     return f"rgba({color_tuple[0]},{color_tuple[1]},{color_tuple[2]},{opacity})"
 
@@ -224,15 +252,37 @@ def return_hex(color_tuple, opacity):
 def return_hex_values(color_tuple, opacity):
     return f"{color_tuple[0]:02x}{color_tuple[1]:02x}{color_tuple[2]:02x}"
 
+def return_hsl(color_tuple, opacity):
+    h, l, s = rgb_to_hls(color_tuple)
+    return f"hsl({h},{l},{s})"
+
+def return_h_from_hsl(color_tuple, opacity):
+    h, l, s = rgb_to_hls(color_tuple)
+    return f"{h}"
+
+def return_s_from_hsl(color_tuple, opacity):
+    h, l, s = rgb_to_hls(color_tuple)
+    return f"{s}"
+
+def return_l_from_hsl(color_tuple, opacity):
+    h, l, s = rgb_to_hls(color_tuple)
+    return f"{l}"
+
+def return_hsl_values(color_tuple, opacity):
+    h, l, s = rgb_to_hls(color_tuple)
+    return f"{h},{l},{s}"
+
 MODIFIER_HANDLERS = {
     'DEFAULT': return_rgba,
     '.rgba': return_rgba,
     '.rgb': return_rgb,
     '.hex': return_hex,
+    '.hsl': return_hsl,
 
     '.rgba_values': return_values,
     '.rgb_values': return_values_without_opacity,
     '.hex_values': return_hex_values,
+    '.hsl_values': return_hsl_values,
 
     '.r': return_red,
     '.red': return_red,
@@ -245,6 +295,16 @@ MODIFIER_HANDLERS = {
 
     '.o': return_opacity,
     '.opacity': return_opacity,
+
+    '.h': return_h_from_hsl,
+    '.hue': return_h_from_hsl,
+
+    '.s': return_s_from_hsl,
+    '.saturation': return_s_from_hsl,
+
+    '.l': return_l_from_hsl,
+    '.lightness': return_l_from_hsl
+
 }
 
 def remap_key(match) -> str:
@@ -260,6 +320,8 @@ def remap_key(match) -> str:
     first_arg_values = colors.get(first_arg)
     if not first_arg_values:
         raise ValueError(f"Color '{first_arg}' not found in the colors dictionary.")
+    if first_arg == "wallpaper" or first_arg == "w":
+        raise ValueError(f"Color '{first_arg}' is not a valid color. It's a wallpaper path.")
     second_arg = match.group(2)
     opacity = float(second_arg) if second_arg else 1.0
 
