@@ -445,7 +445,7 @@ def main():
     parser.add_argument("--json", "-j", type=str, help="colors.json file with pywal colors", required=False)
     parser.add_argument("--stdin", "-si", action="store_true", help="Read theme from stdin.", required=False)
     #parser.add_argument("--service", "-s", type=bool, help="Work as a service.", required=False)
-    parser.add_argument("--version", "-v", action="version", version="2.7.0")
+    parser.add_argument("--version", "-v", action="version", version="2.8.0")
     args = parser.parse_args()
 
     if args.quiet: logging.getLogger().setLevel(logging.ERROR)
