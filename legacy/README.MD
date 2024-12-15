@@ -7,7 +7,7 @@
 <a href="https://github.com/Danrus1100/walcord/releases/download/2.5/walcord.exe"><img alt="Static Badge" src="https://img.shields.io/badge/Windows-2.5-green"></a>
 </p>
 
-# DISCLAMER
+# DISCLAIMER
 ### The legacy version of walcord is described here. Some links and commands may not work correctly from the description below. Please double check what you are doing so that you do not mix up the new and legacy versions
 
 ## How to install from [AUR](https://aur.archlinux.org/packages/walcord)
