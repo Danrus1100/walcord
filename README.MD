@@ -1,7 +1,8 @@
-# Walcord - (Pywal)ing *every* themes for Vencord/Vesktop/BeterDiscord
-
 <p align="center">
-<img src="images/walcord_name_logo.png" />
+<img src="images/walcord_name_logo.png" /> 
+</p>
+<font size="5"><p align="center"><b>Any themes will be PYWAL(ED)</b></p></font>
+<p align="center">
 <a href="https://aur.archlinux.org/packages/walcord"><img alt="Static Badge" src="https://img.shields.io/badge/AUR-2.7-blue"></a>
 <a href="https://github.com/Danrus1100/walcord/releases/download/2.5/walcord.exe"><img alt="Static Badge" src="https://img.shields.io/badge/Windows-2.5-green"></a>
 </p>
