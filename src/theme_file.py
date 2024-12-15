@@ -16,18 +16,26 @@ class ThemeFile():
         self._open_theme_file()
         self.text = self.read_file()
         self.text_lines = self.read_file_as_lines()
-        self.raw_key_lines = self._get_key_lines() # TODO: write function to get lines that need to be changed (with KEY);
-        self.key_lines = self.raw_key_lines
+        self.raw_key_lines = self._get_key_lines() 
 
     def read_file(self):
         with open(self.path, 'r') as f:
             return f.read()
+    
+    def write_file(self):
+        with open(self.path, 'w') as f:
+            f.write(self.text)
+
+    def write_file_from_lines(self):
+        with open(self.path, 'w') as f:
+            f.writelines(self.text_lines)
+    
         
     def read_file_as_lines(self):
         with open(self.path, 'r') as f:
             return f.readlines()
 
-    def write_cache(self):
+    def _write_cache(self):
         os.makedirs(os.path.dirname(self.cache_path), exist_ok=True)
         with open(self.cache_path, 'w') as f:
             json.dump(self._cache, f)
@@ -40,7 +48,7 @@ class ThemeFile():
         try:
             self.read_cache()
         except Exception:
-            self.write_cache()
+            self._write_cache()
     
     def _get_lines_with_key(self):
         for n, line in enumerate(self.text_lines):
@@ -50,9 +58,17 @@ class ThemeFile():
     def _get_key_lines(self):
         if self._cache["lines"] == []:
             self._get_lines_with_key()
-        
-        self.raw_key_lines = self._cache["lines"]
-        self.write_cache()
+        self._write_cache()
+        return self._cache["lines"]
+    
+    def make_theme(self):
+        self.resub_key_lines()
+        self.write_file_from_lines()
+
+    def resub_key_lines(self):
+        for n, line in enumerate(self.raw_key_lines):
+            for key in line:
+                self.text_lines[int(key)] = self.replace_key_with_value(self.raw_key_lines[n][key], "test")
 
     @staticmethod
     def get_hash(string):
