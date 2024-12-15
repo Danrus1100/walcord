@@ -1,0 +1,2 @@
+argparse==1.4.0
+pyinstaller==6.10.0

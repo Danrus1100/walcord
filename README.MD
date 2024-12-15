@@ -7,5 +7,5 @@
 </p>
 
 # Legacy version
-At the time of release of version 3.0.0 templates made for 2.X versions are not supported. If you want to use an older version, please read [legacy version description](https://github.com/Danrus1100/walcord/tree/v3.0.0_dev/legacy).
+At the time of release of version 3.0.0 templates made for 2.X versions may be not supported correctly. If you want to use an older version, please read [legacy version description](https://github.com/Danrus1100/walcord/tree/v3.0.0_dev/legacy).
 ~~TODO: after release change a link~~
