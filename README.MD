@@ -1,11 +1,13 @@
 # Walcord - (Pywal)ing *every* themes for Vencord/Vesktop/BeterDiscord
 
-![image](images/demo.gif)
-
 <p align="center">
+<img src="images/walcord_name_logo.png" />
 <a href="https://aur.archlinux.org/packages/walcord"><img alt="Static Badge" src="https://img.shields.io/badge/AUR-2.7-blue"></a>
 <a href="https://github.com/Danrus1100/walcord/releases/download/2.5/walcord.exe"><img alt="Static Badge" src="https://img.shields.io/badge/Windows-2.5-green"></a>
 </p>
+
+![image](images/demo.gif)
+
 
 ## How to install from [AUR](https://aur.archlinux.org/packages/walcord)
 #### using yay:
