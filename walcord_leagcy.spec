@@ -2,8 +2,8 @@
 
 
 a = Analysis(
-    ['src/main.py'],
-    pathex=['src'],
+    ['main.legacy.py'],
+    pathex=[],
     binaries=[],
     datas=[],
     hiddenimports=['pywal.backends', 'pywal.colors', 'pywal.backends.wal'],
@@ -22,7 +22,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='walcord',
+    name='walcord_legacy',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

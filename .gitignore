@@ -1,7 +1,8 @@
 .venv/
 build/
 dist/
+.vscode/
 __pycache__/
 
-main.spec
-test.py
+src/test.py
+test/
