@@ -5,7 +5,7 @@
 <p align="center">
 <a href="https://aur.archlinux.org/packages/walcord"><img alt="Static Badge" src="https://img.shields.io/badge/AUR-2.8-blue"></a>
 <a href="https://github.com/Danrus1100/walcord/releases/download/2.5/walcord.exe"><img alt="Static Badge" src="https://img.shields.io/badge/Windows-2.5-green"></a>
-<a href="https://github.com/Danrus1100/walcord/tree/v3.0.0_dev"><img alt="Static Badge" src="https://img.shields.io/badge/in_develop-3.0-red"></a>
+<a href="https://github.com/Danrus1100/walcord/tree/v3.0.0_dev"><img alt="Static Badge" src="https://img.shields.io/badge/In_develop-3.0-red"></a>
 </p>
 
 ## How to install from [AUR](https://aur.archlinux.org/packages/walcord)
