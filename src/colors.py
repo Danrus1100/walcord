@@ -2,6 +2,7 @@ import constants as CONST
 import json
 import re
 
+# TODO: fuck out this code and rewrite
 class Colors:
     def __init__(self, colors_path: str = CONST.DEFAULT_WAL_COLORS_PATH):
         self.colors: dict = self.map_colors(self.get_colors_from_json(colors_path))
