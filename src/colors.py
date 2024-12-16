@@ -89,12 +89,12 @@ class Colors:
     @staticmethod
     def map_colors(colors: dict):
         """
-        Maps the given colors to list.
+        Maps the given colors to list an Maps the hex colors to rgb colors.
 
         :param colors: The colors to map to the theme file.
         :type colors: dict
         """
-        return {
+        colors_keys = {
             "wallpaper": colors["wallpaper"],
             "background": colors["special"]["background"],
             "foreground": colors["special"]["foreground"],
@@ -129,6 +129,17 @@ class Colors:
             "w": colors["wallpaper"]
 
         }
+        returned = {}
+        for color in colors_keys:
+            try:
+                returned[color] = tuple(int(colors_keys[color].lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
+            except ValueError:
+                if color == "wallpaper" or color == "w":
+                    returned[color] = colors_keys[color] # wallpaper path (expecting string)
+                    continue
+                # logging.warning(f"Param '{color}' is not a valid hex color. Skipping...")
+                continue
+        return returned
 
     @staticmethod
     def rgb_to_hls(color: tuple) -> tuple:

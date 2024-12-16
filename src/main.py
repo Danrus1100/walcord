@@ -1,5 +1,5 @@
 import argparse
-from theme_file import *
+from file import *
 
 def main():
     print("Hello, World!")
