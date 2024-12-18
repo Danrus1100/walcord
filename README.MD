@@ -57,7 +57,7 @@ pyinstaller walcord.spec
  2. *select `Walcord Default Theme` in Vesktop*
 
 ### 2. Overwrite a existing theme
-First, you need to prepare a theme that will be used as the basis for your theme. (or you can just take ready for use theme frome [examples](https://github.com/Danrus1100/walcord/tree/main/examples)
+First, you need to prepare a theme that will be used as the basis for your theme. (or you can just take ready for use theme frome [examples](https://github.com/Danrus1100/walcord/tree/main/examples))
 To do this, [download](https://betterdiscord.app/themes) the theme, and replace the colors you want with KEY(key_name, opacity).
 script will replace the KEY with the css color code in rgba format:
 
