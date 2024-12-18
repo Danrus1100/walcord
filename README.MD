@@ -1,7 +1,7 @@
 # Walcord - (Pywal)ing *every* themes for Vencord/Vesktop/BeterDiscord
 
 ![image](images/demo.gif)
-<p alignt="center">
+<p align="center">
 
 <b>more themes examples [here](https://github.com/Danrus1100/walcord/tree/main/examples)</b>
 </p>
