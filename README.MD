@@ -3,7 +3,7 @@
 ![image](images/demo.gif)
 <p align="center">
 
-<b>more themes examples <a href="https://github.com/Danrus1100/walcord/tree/main/examples">here</a></b>
+<a href="https://github.com/Danrus1100/walcord/tree/main/examples">More themes examples</a>
 </p>
 
 <p align="center">
