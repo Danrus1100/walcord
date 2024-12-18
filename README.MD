@@ -3,7 +3,7 @@
 ![image](images/demo.gif)
 <p align="center">
 
-<b>more themes examples [here](https://github.com/Danrus1100/walcord/tree/main/examples)</b>
+<p><b>more themes examples [here](https://github.com/Danrus1100/walcord/tree/main/examples)</b></p>
 </p>
 
 <p align="center">
