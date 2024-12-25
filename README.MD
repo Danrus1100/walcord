@@ -12,6 +12,9 @@
 <a href="https://github.com/Danrus1100/walcord/tree/v3.0.0_dev"><img alt="Static Badge" src="https://img.shields.io/badge/In_develop-3.0-red"></a>
 </p>
 
+## Why Archive?
+elkowar is creating [YOLK](https://elkowar.github.io/yolk/), which does almost the same thing that version 3.0 was supposed to do in the future, so I don't see the point of developing this project any more. 
+
 ## How to install from [AUR](https://aur.archlinux.org/packages/walcord)
 #### using yay:
 ```bash
