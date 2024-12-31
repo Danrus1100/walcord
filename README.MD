@@ -31,10 +31,6 @@ makepkg -si
 sudo cp <path_to>/walcord /usr/bin
 walcord
 ```
-#### Windows
-1. Download [ImageMagick](https://imagemagick.org/script/download.php#windows)
-2. Download [walcord.exe](https://github.com/Danrus1100/walcord/releases/download/2.5/walcord.exe)
-2. Сopy wherever you want 
 
 ## How to build frome source:
 ```bash
@@ -46,7 +42,6 @@ pip install -r requirements-<your-system>.txt --upgrade
 pyinstaller walcord.spec
 ./dist/walcord
 ```
-
 
 ## Usage cases:
 
