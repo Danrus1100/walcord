@@ -12,14 +12,9 @@ logging.basicConfig(level=logging.INFO)
 logging.getLogger().handlers[0].setFormatter(logging.Formatter('%(asctime)s (%(levelname)s) - %(message)s'))
 
 
-if os.name == 'posix': # Linux
-    HOME_PATH = os.environ['HOME']
-    ORIGIN_VESKTOP_THEME_PATH = os.path.join(HOME_PATH, ".config/vesktop/themes")
-    IS_STDIN = select.select([sys.stdin], [], [], 0.0)[0]
-elif os.name == 'nt': # Windows
-    HOME_PATH = os.environ['USERPROFILE']
-    ORIGIN_VESKTOP_THEME_PATH = os.path.join(HOME_PATH, "AppData/Roaming/Vencord/themes")
-    IS_STDIN = False
+HOME_PATH = os.environ['HOME']
+ORIGIN_VESKTOP_THEME_PATH = os.path.join(HOME_PATH, ".config/vesktop/themes")
+IS_STDIN = select.select([sys.stdin], [], [], 0.0)[0]
 DEFAULT_THEME = """
 /**
  * @name Walcord Default Theme
@@ -90,18 +85,6 @@ DEFAULT_THEME = """
 	--backgroundfloating: hsla(220, 20%, 40%, 0.2);
 }
 """
-
-def get_windows_wallpaper() -> str:
-    """
-    Returns the path to the current wallpaper on Windows.
-
-    :return: The path to the current wallpaper.
-    :rtype: str
-    """
-    logging.info("(walcord) getting wallpaper path...")
-    buffer = ctypes.create_unicode_buffer(512)
-    ctypes.windll.user32.SystemParametersInfoW(0x0073, 512, buffer, 0)
-    return buffer.value
 
 def get_colors_pywal(image_path: str) -> dict:
     """
@@ -454,8 +437,7 @@ def main():
     if args.json:
         colors = get_colors_json(args.json)
     else:
-        if os.name == 'posix': colors = get_colors_pywal(args.image) if args.image else get_colors_json()
-        elif os.name == 'nt': colors = get_colors_pywal(args.image) if args.image else get_colors_pywal(get_windows_wallpaper())
+        colors = get_colors_pywal(args.image) if args.image else get_colors_json()
     colors = hex_to_rgb_map(map_colors(colors))
 
     if IS_STDIN and args.stdin:
