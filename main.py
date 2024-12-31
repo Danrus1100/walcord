@@ -7,14 +7,15 @@ import json
 import logging
 import ctypes
 import select
+import colorsys
 
 logging.basicConfig(level=logging.INFO)
 logging.getLogger().handlers[0].setFormatter(logging.Formatter('%(asctime)s (%(levelname)s) - %(message)s'))
 
-
 HOME_PATH = os.environ['HOME']
 ORIGIN_VESKTOP_THEME_PATH = os.path.join(HOME_PATH, ".config/vesktop/themes")
 IS_STDIN = select.select([sys.stdin], [], [], 0.0)[0]
+colors = {}
 DEFAULT_THEME = """
 /**
  * @name Walcord Default Theme
@@ -190,118 +191,115 @@ def rgb_to_hls(color: tuple) -> tuple:
     :rtype: tuple
     """
     r, g, b = color
-    r, g, b = r / 255.0, g / 255.0, b / 255.0
-    maxc = max(r, g, b)
-    minc = min(r, g, b)
-    l = (maxc + minc) / 2.0
-    if maxc == minc:
-        h = s = 0.0
-    else:
-        d = maxc - minc
-        s = d / (2.0 - maxc - minc) if l > 0.5 else d / (maxc + minc)
-        if maxc == r:
-            h = (g - b) / d + (6.0 if g < b else 0.0)
-        elif maxc == g:
-            h = (b - r) / d + 2.0
-        else:
-            h = (r - g) / d + 4.0
-        h /= 6.0
-    return h, l, s
+    return colorsys.rgb_to_hls(r / 255.0, g / 255.0, b / 255.0)
 
-def return_rgba(color_tuple, opacity):
+def return_rgba_string(color_tuple, opacity):
     return f"rgba({color_tuple[0]},{color_tuple[1]},{color_tuple[2]},{opacity})"
 
-def return_rgb(color_tuple, opacity):
+def return_rgb_string(color_tuple, opacity):
     return f"rgb({color_tuple[0]},{color_tuple[1]},{color_tuple[2]})"
 
-def return_values(color_tuple, opacity):
+def return_values_string(color_tuple, opacity):
     return f"{color_tuple[0]},{color_tuple[1]},{color_tuple[2]},{opacity}"
 
-def return_values_without_opacity(color_tuple, opacity):
+def return_values_without_opacity_string(color_tuple, opacity):
     return f"{color_tuple[0]},{color_tuple[1]},{color_tuple[2]}"
 
-def return_red(color_tuple, opacity):
+def return_red_string(color_tuple, opacity):
     return f"{color_tuple[0]}"
 
-def return_green(color_tuple, opacity):
+def return_green_string(color_tuple, opacity):
     return f"{color_tuple[1]}"
 
-def return_blue(color_tuple, opacity):
+def return_blue_string(color_tuple, opacity):
     return f"{color_tuple[2]}"
 
-def return_opacity(color_tuple, opacity):
+def return_opacity_string(color_tuple, opacity):
     return f"{opacity}"
 
-def return_hex(color_tuple, opacity):
+def return_hex_string(color_tuple, opacity):
     return f"#{color_tuple[0]:02x}{color_tuple[1]:02x}{color_tuple[2]:02x}"
 
-def return_hex_values(color_tuple, opacity):
+def return_hex_values_string(color_tuple, opacity):
     return f"{color_tuple[0]:02x}{color_tuple[1]:02x}{color_tuple[2]:02x}"
 
-def return_hsl(color_tuple, opacity):
+def return_hsl_string(color_tuple, opacity):
     h, l, s = rgb_to_hls(color_tuple)
     return f"hsl({h},{l},{s})"
 
-def return_h_from_hsl(color_tuple, opacity):
+def return_h_from_hsl_string(color_tuple, opacity):
     h, l, s = rgb_to_hls(color_tuple)
     return f"{h}"
 
-def return_s_from_hsl(color_tuple, opacity):
+def return_s_from_hsl_string(color_tuple, opacity):
     h, l, s = rgb_to_hls(color_tuple)
     return f"{s}"
 
-def return_l_from_hsl(color_tuple, opacity):
+def return_l_from_hsl_string(color_tuple, opacity):
     h, l, s = rgb_to_hls(color_tuple)
     return f"{l}"
 
-def return_hsl_values(color_tuple, opacity):
+def return_hsl_values_string(color_tuple, opacity):
     h, l, s = rgb_to_hls(color_tuple)
     return f"{h},{l},{s}"
 
-MODIFIER_HANDLERS = {
-    'DEFAULT': return_rgba,
-    '.rgba': return_rgba,
-    '.rgb': return_rgb,
-    '.hex': return_hex,
-    '.hsl': return_hsl,
+FIRST_MODIFIERS = {
+    'DEFAULT': return_rgba_string,
+    '.rgba': return_rgba_string,
+    '.rgb': return_rgb_string,
+    '.hex': return_hex_string,
+    '.hsl': return_hsl_string,
 
-    '.rgba_values': return_values,
-    '.rgb_values': return_values_without_opacity,
-    '.hex_values': return_hex_values,
-    '.hsl_values': return_hsl_values,
+    '.rgba_values': return_values_string,
+    '.rgb_values': return_values_without_opacity_string,
+    '.hex_values': return_hex_values_string,
+    '.hsl_values': return_hsl_values_string,
 
-    '.r': return_red,
-    '.red': return_red,
+    '.r': return_red_string,
+    '.red': return_red_string,
 
-    '.g': return_green,
-    '.green': return_green,
+    '.g': return_green_string,
+    '.green': return_green_string,
 
-    '.b': return_blue,
-    '.blue': return_blue,
+    '.b': return_blue_string,
+    '.blue': return_blue_string,
 
-    '.o': return_opacity,
-    '.opacity': return_opacity,
+    '.o': return_opacity_string,
+    '.opacity': return_opacity_string,
 
-    '.h': return_h_from_hsl,
-    '.hue': return_h_from_hsl,
+    '.h': return_h_from_hsl_string,
+    '.hue': return_h_from_hsl_string,
 
-    '.s': return_s_from_hsl,
-    '.saturation': return_s_from_hsl,
+    '.s': return_s_from_hsl_string,
+    '.saturation': return_s_from_hsl_string,
 
-    '.l': return_l_from_hsl,
-    '.lightness': return_l_from_hsl
-
+    '.l': return_l_from_hsl_string,
+    '.lightness': return_l_from_hsl_string
 }
 
-def remap_key(match) -> str:
+def parce_second_modifier_params(modifier: str, colors) -> tuple:
+    """
+    Parces the second modifier parameters.
+
+    :param modifier: The modifier to parces.
+    :type modifier: str
+    :return: The parced parameters.
+    :rtype: tuple
+    """
+    return None
+    
+
+SECOND_MODIFIERS = {
+    '.add': lambda color, opacity: color,
+}
+
+def remap_key(match: re.Match) -> str:
     """
     Remaps the key to the css rgba format.
 
     :param match: The match object to remap.
     :type match: re.Match
     """
-    global colors
-
     first_arg = match.group(1).lower()
     first_arg_values = colors.get(first_arg)
     if not first_arg_values:
@@ -310,26 +308,31 @@ def remap_key(match) -> str:
     try:
         second_arg = float(second_arg)
         if second_arg < 0.0:
-            raise ValueError(f"Opacity value is not a valid: {second_arg} (it should be 0.0-1.0 or 1-100). Opacity will be set to 1.0...")
             opacity = 1.0
-        if second_arg > 1.0 and second_arg < 100:
+            raise ValueError(f"Opacity value is not a valid: {second_arg} (it should be 0.0-1.0 or 1-100). Opacity will be set to 1.0...")
+        if second_arg > 1.0 and second_arg <= 100:
             second_arg = second_arg / 100
         elif second_arg > 100:
-            raise ValueError(f"Opacity value is not a valid: {second_arg} (it should be less than 100%). Opacity will be set to 1.0...")
             opacity = 1.0
+            raise ValueError(f"Opacity value is not a valid: {second_arg} (it should be less than 100%). Opacity will be set to 1.0...")
         opacity = second_arg
     except Exception as e:
-        raise ValueError(f"Opacity value is not a valid: {second_arg}. opacity will be set to 1.0")
         opacity = 1.0
+        raise ValueError(f"Opacity value is not a valid: {second_arg}. opacity will be set to 1.0")
 
 
-    modifier = match.group(3).lower() if match.group(3) else None
+    first_modifier = match.group(3).lower() if match.group(3) else None
+    second_modifer = match.group(4).lower() if match.group(4) else None
+    second_modifer_name: str = second_modifer.replace("(", "").replace(")", "") if second_modifer else None
 
-    if (first_arg == "wallpaper" or first_arg == "w") and (opacity != 1.0 or modifier):
+    if second_modifer and second_modifer_name in SECOND_MODIFIERS:
+        pass
+
+    if (first_arg == "wallpaper" or first_arg == "w") and (opacity != 1.0 or first_modifier):
         raise ValueError(f"You cant use opacity or modifier with wallpaper key.")
-    if modifier and modifier in MODIFIER_HANDLERS:
-        return MODIFIER_HANDLERS[modifier](first_arg_values, opacity)
-    return MODIFIER_HANDLERS['DEFAULT'](first_arg_values, opacity)
+    if first_modifier and first_modifier in FIRST_MODIFIERS:
+        return FIRST_MODIFIERS[first_modifier](first_arg_values, opacity)
+    return FIRST_MODIFIERS['DEFAULT'](first_arg_values, opacity)
 
 def replace_key(text: str) -> str:
     """
@@ -340,7 +343,7 @@ def replace_key(text: str) -> str:
     :return: The text with the key replaced.
     :rtype: str
     """
-    return re.sub(r'KEY\((\w+)(?:,\s*(\d+(?:\.\d+)?))?\)(\.\w+)?', remap_key, text, flags=re.IGNORECASE)
+    return re.sub(r'KEY\((\w+)(?:,\s*(\d+(?:\.\d+)?))?\)(\.\w+)?(\.\w+)?', remap_key, text, flags=re.IGNORECASE)
 
 def check_path(path: str, file_name: str = "") -> None:
     """
@@ -411,8 +414,6 @@ def try_replace_key_in_theme(lines: dict, filename: str, end: str = "") -> str:
             output += i + end
     
     return output
-
-colors = {}
 
 def main():
     global colors
