@@ -150,9 +150,11 @@ KEY(a).rgb.add(0, 50) /* become 60, 20, 30 */
 ```
 <details>
 <summary>All second modifiers (click me)</summary>
+
  - `add / a` (pos, val)
  - `sub / s` (pos, val)
  - `invert / i` no params
+
 </details>
 
 ### ToDo
