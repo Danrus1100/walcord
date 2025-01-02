@@ -146,6 +146,7 @@ You can also add, subtract a numeric value from a certain parameter, or invert c
 ***
 KEY(a).rgb  /* its 10, 20, 30 for example */
 KEY(a).rgb.add(0, 50) /* become 60, 20, 30 */
+KEY(a).rgb.invert /* become 245, 235, 225 */
 ***
 ```
 <details>
