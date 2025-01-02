@@ -158,6 +158,6 @@ KEY(a).rgb.invert /* become 245, 235, 225 */
 
 </details>
 
-### Special thanks
+# Special thanks
  - [danihek/Themecord](https://github.com/danihek/Themecord): The Mastermind
  - [dylanaraps/pywal](https://github.com/dylanaraps/pywal): without it, this project would not exist
