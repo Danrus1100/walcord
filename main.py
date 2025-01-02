@@ -193,54 +193,79 @@ def rgb_to_hls(color: tuple) -> tuple:
     r, g, b = color
     return colorsys.rgb_to_hls(r / 255.0, g / 255.0, b / 255.0)
 
-def return_rgba_string(color_tuple, opacity):
+def add_to_color_tuple(color: tuple, value: int, pos: int) -> tuple:
+    color = list(color)
+    color[pos] += value
+    return tuple(color)
+
+def invert_color(color: tuple) -> tuple:
+    return tuple(255 - i for i in color)
+
+def check_and_apply_second_modificator(color_tuple: tuple, scond_mod: dict) -> tuple:
+    if scond_mod["type"] == "add" or scond_mod["type"] == "sub":
+        color_tuple = add_to_color_tuple(color_tuple, scond_mod["mod"], scond_mod["pos"])
+    elif scond_mod["type"] == "invert":
+        color_tuple = invert_color(color_tuple)
+    return color_tuple
+
+def return_rgba_string(color_tuple, opacity, scond_mod):
+    color_tuple = check_and_apply_second_modificator(color_tuple, scond_mod)
     return f"rgba({color_tuple[0]},{color_tuple[1]},{color_tuple[2]},{opacity})"
 
-def return_rgb_string(color_tuple, opacity):
+def return_rgb_string(color_tuple, opacity, scond_mod):
+    color_tuple = check_and_apply_second_modificator(color_tuple, scond_mod)
     return f"rgb({color_tuple[0]},{color_tuple[1]},{color_tuple[2]})"
 
-def return_values_string(color_tuple, opacity):
+def return_values_string(color_tuple, opacity, scond_mod):
+    color_tuple = check_and_apply_second_modificator(color_tuple, scond_mod)
     return f"{color_tuple[0]},{color_tuple[1]},{color_tuple[2]},{opacity}"
 
-def return_values_without_opacity_string(color_tuple, opacity):
+def return_values_without_opacity_string(color_tuple, opacity, scond_mod):
+    color_tuple = check_and_apply_second_modificator(color_tuple, scond_mod)
     return f"{color_tuple[0]},{color_tuple[1]},{color_tuple[2]}"
 
-def return_red_string(color_tuple, opacity):
+def return_red_string(color_tuple, opacity, scond_mod):
+    color_tuple = check_and_apply_second_modificator(color_tuple, scond_mod)
     return f"{color_tuple[0]}"
 
-def return_green_string(color_tuple, opacity):
+def return_green_string(color_tuple, opacity, scond_mod):
+    color_tuple = check_and_apply_second_modificator(color_tuple, scond_mod)
     return f"{color_tuple[1]}"
 
-def return_blue_string(color_tuple, opacity):
+def return_blue_string(color_tuple, opacity, scond_mod):
+    color_tuple = check_and_apply_second_modificator(color_tuple, scond_mod)
     return f"{color_tuple[2]}"
 
-def return_opacity_string(color_tuple, opacity):
+def return_opacity_string(color_tuple, opacity, scond_mod):
+    color_tuple = check_and_apply_second_modificator(color_tuple, scond_mod)
     return f"{opacity}"
 
-def return_hex_string(color_tuple, opacity):
+def return_hex_string(color_tuple, opacity, scond_mod):
+    color_tuple = check_and_apply_second_modificator(color_tuple, scond_mod)
     return f"#{color_tuple[0]:02x}{color_tuple[1]:02x}{color_tuple[2]:02x}"
 
-def return_hex_values_string(color_tuple, opacity):
+def return_hex_values_string(color_tuple, opacity, scond_mod):
+    color_tuple = check_and_apply_second_modificator(color_tuple, scond_mod)
     return f"{color_tuple[0]:02x}{color_tuple[1]:02x}{color_tuple[2]:02x}"
 
-def return_hsl_string(color_tuple, opacity):
-    h, l, s = rgb_to_hls(color_tuple)
+def return_hsl_string(color_tuple, opacity, scond_mod):
+    h, l, s = check_and_apply_second_modificator(rgb_to_hls(color_tuple))
     return f"hsl({h},{l},{s})"
 
-def return_h_from_hsl_string(color_tuple, opacity):
-    h, l, s = rgb_to_hls(color_tuple)
+def return_h_from_hsl_string(color_tuple, opacity, scond_mod):
+    h, l, s = check_and_apply_second_modificator(rgb_to_hls(color_tuple))
     return f"{h}"
 
-def return_s_from_hsl_string(color_tuple, opacity):
-    h, l, s = rgb_to_hls(color_tuple)
+def return_s_from_hsl_string(color_tuple, opacity, scond_mod):
+    h, l, s = check_and_apply_second_modificator(rgb_to_hls(color_tuple))
     return f"{s}"
 
-def return_l_from_hsl_string(color_tuple, opacity):
-    h, l, s = rgb_to_hls(color_tuple)
+def return_l_from_hsl_string(color_tuple, opacity, scond_mod):
+    h, l, s = check_and_apply_second_modificator(rgb_to_hls(color_tuple))
     return f"{l}"
 
-def return_hsl_values_string(color_tuple, opacity):
-    h, l, s = rgb_to_hls(color_tuple)
+def return_hsl_values_string(color_tuple, opacity, scond_mod):
+    h, l, s = check_and_apply_second_modificator(rgb_to_hls(color_tuple))
     return f"{h},{l},{s}"
 
 FIRST_MODIFIERS = {
@@ -277,21 +302,39 @@ FIRST_MODIFIERS = {
     '.lightness': return_l_from_hsl_string
 }
 
-def parce_second_modifier_params(modifier: str, colors) -> tuple:
-    """
-    Parces the second modifier parameters.
+def add_modificator(params):
+    # print(params)
+    p = params.replace(" ","").replace("(", "").replace(")", "").split(",")
+    if len(p) < 2 or len(p) > 2:
+        raise ValueError(f"Add modificator takes 2 parameters. You gave {len(p)} parameters")
+    return {"pos": int(p[0]), "mod": int(p[1]), "type": "add"}
 
-    :param modifier: The modifier to parces.
-    :type modifier: str
-    :return: The parced parameters.
-    :rtype: tuple
-    """
-    return None
-    
+def sub_modificator(params):
+    p = params.replace(" ","").replace("(", "").replace(")", "").split(",")
+    if len(p) < 2 or len(p) > 2:
+        raise ValueError(f"Add modificator takes 2 parameters. You gave {len(p)} parameters")
+    return {"pos": int(p[0]), "mod": -1 * int(p[1]), "type": "sub"}
+
+def invert_modificator(params):
+    if params:
+        raise ValueError(f"Invert modificator takes no parameters. You gave {params}")
+    return {"pos": 0, "mod": 0, "type": "invert"}
+
 
 SECOND_MODIFIERS = {
-    '.add': lambda color, opacity: color,
+    '.add': add_modificator,
+    '.sub': sub_modificator,
+    '.invert': invert_modificator,
+
+    # aliases
+    '.a': add_modificator,
+    '.s': sub_modificator,
+    '.i': invert_modificator
 }
+
+
+
+    
 
 def remap_key(match: re.Match) -> str:
     """
@@ -322,16 +365,25 @@ def remap_key(match: re.Match) -> str:
 
 
     first_modifier = match.group(3).lower() if match.group(3) else None
-    second_modifer = match.group(4).lower() if match.group(4) else None
-    second_modifer_name: str = second_modifer.replace("(", "").replace(")", "") if second_modifer else None
+    second_modifer:str = match.group(4).lower() if match.group(4) else None
+    second_modifer_name: str = re.sub(r'[0-9,]', '', second_modifer.replace("(", "").replace(")", "")).replace(" ", "") if second_modifer else None
+    second_modifer_raw_params = match.group(5)
+
+    second_modifer_params = {
+        "pos": 0,
+        "mod": 0,
+        "type": None
+    }
+
+    # print(second_modifer_name)
 
     if second_modifer and second_modifer_name in SECOND_MODIFIERS:
-        pass
+        second_modifer_params = SECOND_MODIFIERS[second_modifer_name](second_modifer_raw_params)
 
     if (first_arg == "wallpaper" or first_arg == "w") and (opacity != 1.0 or first_modifier):
         raise ValueError(f"You cant use opacity or modifier with wallpaper key.")
     if first_modifier and first_modifier in FIRST_MODIFIERS:
-        return FIRST_MODIFIERS[first_modifier](first_arg_values, opacity)
+        return FIRST_MODIFIERS[first_modifier](first_arg_values, opacity, second_modifer_params)
     return FIRST_MODIFIERS['DEFAULT'](first_arg_values, opacity)
 
 def replace_key(text: str) -> str:
@@ -343,7 +395,7 @@ def replace_key(text: str) -> str:
     :return: The text with the key replaced.
     :rtype: str
     """
-    return re.sub(r'KEY\((\w+)(?:,\s*(\d+(?:\.\d+)?))?\)(\.\w+)?(\.\w+)?', remap_key, text, flags=re.IGNORECASE)
+    return re.sub(r'KEY\((\w+)(?:,\s*(\d+(?:\.\d+)?))?\)(\.\w+)?(\.\w+(\(\d+(?:\.\d+)?(?:,\s*\d+(?:\.\d+)?)?\))?)?', remap_key, text, flags=re.IGNORECASE)
 
 def check_path(path: str, file_name: str = "") -> None:
     """
@@ -429,7 +481,7 @@ def main():
     parser.add_argument("--json", "-j", type=str, help="colors.json file with pywal colors", required=False)
     parser.add_argument("--stdin", "-si", action="store_true", help="Read theme from stdin.", required=False)
     #parser.add_argument("--service", "-s", type=bool, help="Work as a service.", required=False)
-    parser.add_argument("--version", "-v", action="version", version="2.8.0")
+    parser.add_argument("--version", "-v", action="version", version="2.9.0")
     args = parser.parse_args()
 
     if args.quiet: logging.getLogger().setLevel(logging.ERROR)
