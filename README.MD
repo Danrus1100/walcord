@@ -164,7 +164,6 @@ KEY(a).rgb.invert /* become 245, 235, 225 */
 - [x] simple theme
 - [x] `--theme` optional (use simple theme)
 - [x] windows support
-- [ ] service mode (for windows users)
 
 ### Special thanks
  - [danihek/Themecord](https://github.com/danihek/Themecord): The Mastermind
