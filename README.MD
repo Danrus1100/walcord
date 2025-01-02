@@ -140,6 +140,21 @@ If you only want values from KEY, individual colors, or HEX format, you can use 
 
 </details>
 
+You can also add, subtract a numeric value from a certain parameter, or invert colors with second modifiers:
+
+```css
+***
+KEY(a).rgb  /* its 10, 20, 30 for example */
+KEY(a).rgb.add(0, 50) /* become 60, 20, 30 */
+***
+```
+<details>
+<summary>All second modifiers (click me)</summary>
+ - `add / a` (pos, val)
+ - `sub / s` (pos, val)
+ - `invert / i` no params
+</details>
+
 ### ToDo
 - [x] `--image` optional
 - [x] `--output` argument (saving a file to a specific path and name)
