@@ -2,15 +2,25 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python Debugger: Current File with Arguments",
+            "name": "Walcord test.txt files",
             "type": "debugpy",
             "request": "launch",
             "program": "main.py",
             "console": "integratedTerminal",
             "args": [
-                "-t", "/home/danrus/walcord/test.txt",
-                "-o", "/home/danrus/walcord/test2.txt"
+                "-t", "${workspaceFolder}/test.txt",
+                "-o", "${workspaceFolder}/test2.txt"
             ]
-        }
+        },
+        {
+            "name": "Walcord examples folder",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "-t", "${workspaceFolder}/examples/",
+            ]
+        },
     ]
 }
