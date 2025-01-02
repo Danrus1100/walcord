@@ -208,63 +208,63 @@ def check_and_apply_second_modificator(color_tuple: tuple, scond_mod: dict) -> t
         color_tuple = invert_color(color_tuple)
     return color_tuple
 
-def return_rgba_string(color_tuple, opacity, scond_mod):
+def return_rgba_string(color_tuple, opacity, scond_mod = {"pos": 0, "mod": 0, "type": None}):
     color_tuple = check_and_apply_second_modificator(color_tuple, scond_mod)
     return f"rgba({color_tuple[0]},{color_tuple[1]},{color_tuple[2]},{opacity})"
 
-def return_rgb_string(color_tuple, opacity, scond_mod):
+def return_rgb_string(color_tuple, opacity, scond_mod = {"pos": 0, "mod": 0, "type": None}):
     color_tuple = check_and_apply_second_modificator(color_tuple, scond_mod)
     return f"rgb({color_tuple[0]},{color_tuple[1]},{color_tuple[2]})"
 
-def return_values_string(color_tuple, opacity, scond_mod):
+def return_values_string(color_tuple, opacity, scond_mod = {"pos": 0, "mod": 0, "type": None}):
     color_tuple = check_and_apply_second_modificator(color_tuple, scond_mod)
     return f"{color_tuple[0]},{color_tuple[1]},{color_tuple[2]},{opacity}"
 
-def return_values_without_opacity_string(color_tuple, opacity, scond_mod):
+def return_values_without_opacity_string(color_tuple, opacity, scond_mod = {"pos": 0, "mod": 0, "type": None}):
     color_tuple = check_and_apply_second_modificator(color_tuple, scond_mod)
     return f"{color_tuple[0]},{color_tuple[1]},{color_tuple[2]}"
 
-def return_red_string(color_tuple, opacity, scond_mod):
+def return_red_string(color_tuple, opacity, scond_mod = {"pos": 0, "mod": 0, "type": None}):
     color_tuple = check_and_apply_second_modificator(color_tuple, scond_mod)
     return f"{color_tuple[0]}"
 
-def return_green_string(color_tuple, opacity, scond_mod):
+def return_green_string(color_tuple, opacity, scond_mod = {"pos": 0, "mod": 0, "type": None}):
     color_tuple = check_and_apply_second_modificator(color_tuple, scond_mod)
     return f"{color_tuple[1]}"
 
-def return_blue_string(color_tuple, opacity, scond_mod):
+def return_blue_string(color_tuple, opacity, scond_mod = {"pos": 0, "mod": 0, "type": None}):
     color_tuple = check_and_apply_second_modificator(color_tuple, scond_mod)
     return f"{color_tuple[2]}"
 
-def return_opacity_string(color_tuple, opacity, scond_mod):
+def return_opacity_string(color_tuple, opacity, scond_mod = {"pos": 0, "mod": 0, "type": None}):
     color_tuple = check_and_apply_second_modificator(color_tuple, scond_mod)
     return f"{opacity}"
 
-def return_hex_string(color_tuple, opacity, scond_mod):
+def return_hex_string(color_tuple, opacity, scond_mod = {"pos": 0, "mod": 0, "type": None}):
     color_tuple = check_and_apply_second_modificator(color_tuple, scond_mod)
     return f"#{color_tuple[0]:02x}{color_tuple[1]:02x}{color_tuple[2]:02x}"
 
-def return_hex_values_string(color_tuple, opacity, scond_mod):
+def return_hex_values_string(color_tuple, opacity, scond_mod = {"pos": 0, "mod": 0, "type": None}):
     color_tuple = check_and_apply_second_modificator(color_tuple, scond_mod)
     return f"{color_tuple[0]:02x}{color_tuple[1]:02x}{color_tuple[2]:02x}"
 
-def return_hsl_string(color_tuple, opacity, scond_mod):
+def return_hsl_string(color_tuple, opacity, scond_mod = {"pos": 0, "mod": 0, "type": None}): 
     h, l, s = check_and_apply_second_modificator(rgb_to_hls(color_tuple))
     return f"hsl({h},{l},{s})"
 
-def return_h_from_hsl_string(color_tuple, opacity, scond_mod):
+def return_h_from_hsl_string(color_tuple, opacity, scond_mod = {"pos": 0, "mod": 0, "type": None}):
     h, l, s = check_and_apply_second_modificator(rgb_to_hls(color_tuple))
     return f"{h}"
 
-def return_s_from_hsl_string(color_tuple, opacity, scond_mod):
+def return_s_from_hsl_string(color_tuple, opacity, scond_mod = {"pos": 0, "mod": 0, "type": None}):
     h, l, s = check_and_apply_second_modificator(rgb_to_hls(color_tuple))
     return f"{s}"
 
-def return_l_from_hsl_string(color_tuple, opacity, scond_mod):
+def return_l_from_hsl_string(color_tuple, opacity, scond_mod = {"pos": 0, "mod": 0, "type": None}):
     h, l, s = check_and_apply_second_modificator(rgb_to_hls(color_tuple))
     return f"{l}"
 
-def return_hsl_values_string(color_tuple, opacity, scond_mod):
+def return_hsl_values_string(color_tuple, opacity, scond_mod = {"pos": 0, "mod": 0, "type": None}):
     h, l, s = check_and_apply_second_modificator(rgb_to_hls(color_tuple))
     return f"{h},{l},{s}"
 
@@ -481,7 +481,7 @@ def main():
     parser.add_argument("--json", "-j", type=str, help="colors.json file with pywal colors", required=False)
     parser.add_argument("--stdin", "-si", action="store_true", help="Read theme from stdin.", required=False)
     #parser.add_argument("--service", "-s", type=bool, help="Work as a service.", required=False)
-    parser.add_argument("--version", "-v", action="version", version="2.9.0")
+    parser.add_argument("--version", "-v", action="version", version="2.9.1")
     args = parser.parse_args()
 
     if args.quiet: logging.getLogger().setLevel(logging.ERROR)
