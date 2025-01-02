@@ -158,13 +158,6 @@ KEY(a).rgb.invert /* become 245, 235, 225 */
 
 </details>
 
-### ToDo
-- [x] `--image` optional
-- [x] `--output` argument (saving a file to a specific path and name)
-- [x] simple theme
-- [x] `--theme` optional (use simple theme)
-- [x] windows support
-
 ### Special thanks
  - [danihek/Themecord](https://github.com/danihek/Themecord): The Mastermind
  - [dylanaraps/pywal](https://github.com/dylanaraps/pywal): without it, this project would not exist
