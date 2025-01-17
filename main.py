@@ -438,18 +438,16 @@ def check_themes(theme: str) -> None:
     """
     logging.info(f"(walcord) checking theme path: {theme}")
     if "~" in theme: theme = theme.replace("~", HOME_PATH)
-    if "." in theme[1:]:
-        if not os.path.exists(theme):
-            logging.error(f"(walcord) Error: Theme file not found: {theme}")
-            sys.exit(-1)
-        else:
-            theme_files_paths.append(theme)
-    else:
-        if os.path.exists(theme):
-            for root, dirs, files in os.walk(theme):
-                for file in files:
-                    theme_files_paths.append(os.path.join(root, file))
-    logging.info(f"(walcord) founded {len(theme_files_paths)} theme files.")
+    if os.path.isfile(theme): # Check if path is a file
+        theme_files_paths.append(theme)
+    elif os.path.isdir(theme): # Check if path is a directory
+        for root, dirs, files in os.walk(theme):
+            for file in files:
+                theme_files_paths.append(os.path.join(root, file))
+    else: # Path is not a file or directory so error
+        logging.error(f"(walcord) Error: Is not an existing file or directory: {theme}")
+        sys.exit(-1)
+    logging.info(f"(walcord) found {len(theme_files_paths)} theme files.")
 
 def try_replace_key_in_theme(lines: dict, filename: str, end: str = "") -> str:
     output = ""
