@@ -51,12 +51,18 @@ pyinstaller walcord.spec
  2. *select `Walcord Default Theme` in Vesktop*
 
 ### 2. Overwrite a existing theme
-First, you need to prepare a theme that will be used as the basis for your theme (or you can just take ready for use theme frome [examples](https://github.com/Danrus1100/walcord/tree/main/examples)).
-To do this, [download](https://betterdiscord.app/themes) the theme, and replace the colors you want with KEY(key_name, opacity).
+First, you need to prepare a theme that will be used as the template for your theme (or you can just take ready for use theme frome [examples](https://github.com/Danrus1100/walcord/tree/main/examples)).
+To do this, [download](https://betterdiscord.app/themes) the theme (or write to yourself), and replace the colors you want with KEY(key_name, opacity).
 script will replace the KEY with the css color code in rgba format:
 
 ```css
---some-var: KEY(1, 0.5); /* will become rgba(r, g, b, 0.5) */
+/* template.css */
+
+--some-var: KEY(1, 0.5);
+
+/* theme.css */
+
+--some-var: rgba(19,31,44,0.5)
 ```
 The KEY syntax will be discussed in more detail [here](#keys-syntax)
 
@@ -77,28 +83,18 @@ You can also use the image you want, from which the colors will be taken, using 
 walcord -i <path-to-image>
 ```
 
-## Tips and Tricks:
-You can use the `--json` argument if you want to use a different palette creation backend, such as [Hellwal](https://github.com/danihek/hellwal): 
-```bash
-walcord -j ~/.cache/hellwal/colors.json
-```
-
 ## KEY's syntax
 
 KEY() can take `background`, `foreground` and numbers from 0 to 15 as the first argument:
 
 ```css
-***
 --bg-3: KEY(background);
 --text-3: KEY(2)
-***
 ```
 you can also set the transparency of the color from 0 to 1 and use short names:
 ```css
-***
 --accent-1: KEY(F, 0.75)
 --hover: KEY(br, 1)
-***
 ```
 <details>
 <summary>All names of colors and they short vesions (click me)</summary>
@@ -111,12 +107,19 @@ you can also set the transparency of the color from 0 to 1 and use short names:
  - `wallpaper: w`
 </details>
 
-If you only want values from KEY, individual colors, or HEX format, you can use the output parameters:
+If you only want values from KEY, individual colors, or HEX format, you can use the output modifiers:
 
 ```css
-***
---accentcolor: KEY(a).rgb_values; /* it will become just r,g,b values*/
---foo: KEY(T).r /* it will become just r value*/
+/* template.css */
+
+--accentcolor: KEY(a).rgb_values; 
+--foo: KEY(T).r 
+
+/* theme.css */
+
+--accentcolor: 146,172,200; 
+--foo: 216 
+
 ***
 ```
 <details>
@@ -143,20 +146,48 @@ If you only want values from KEY, individual colors, or HEX format, you can use 
 You can also add, subtract a numeric value from a certain parameter, or invert colors with second modifiers:
 
 ```css
-***
-KEY(a).rgb  /* its 10, 20, 30 for example */
-KEY(a).rgb.add(0, 50) /* become 60, 20, 30 */
-KEY(a).rgb.invert /* become 245, 235, 225 */
-***
+/* template.css */
+
+KEY(a).rgb  
+KEY(a).rgb.add(0, 50) 
+KEY(a).rgb.invert 
+
+/* theme.css */
+
+rgb(146,172,200)
+rgb(196,172,200)
+rgb(109,83,55) 
 ```
 <details>
 <summary>All second modifiers (click me)</summary>
 
- - `add / a` (pos, val)
- - `sub / s` (pos, val)
+ - `add / a` (position, value)
+ - `sub / s` (position, value)
  - `invert / i` no params
 
 </details>
+
+## Tips and Tricks:
+- You can use the `--json` argument if you want to use a different palette creation backend, such as [Hellwal](https://github.com/danihek/hellwal): 
+```bash
+walcord -j ~/.cache/hellwal/colors.json
+```
+
+- You should specify only 1 argument in a secondary modifier, if it is primary modifiers, where it is subroutine that the result will be only one number:
+```css
+/* template.css */
+
+KEY(B).r.a(10) /* will be ok */
+KEY(B).r.a(1, 10) /* will be okn't */
+KEY(B).r
+
+/* theme.css */
+
+29
+KEY(B).r.a(1, 10) /* walcord said: Add modificator takes 1 parameters (value). You gave 2 parameters, FIXME please. */
+19
+```
+
 
 # Special thanks
  - [danihek/Themecord](https://github.com/danihek/Themecord): The Mastermind

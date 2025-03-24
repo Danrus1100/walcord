@@ -429,7 +429,7 @@ def remap_key(match: re.Match) -> str:
         raise ValueError(f"You cant use opacity or modifier with wallpaper key.")
     if first_modifier and first_modifier in FIRST_MODIFIERS:
         return FIRST_MODIFIERS[first_modifier](first_arg_values, opacity, second_modifer_params)
-    return FIRST_MODIFIERS['DEFAULT'](first_arg_values, opacity)
+    return FIRST_MODIFIERS['DEFAULT'](first_arg_values, opacity, second_modifer_params)
 
 def replace_key(text: str) -> str:
     """
