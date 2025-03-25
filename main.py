@@ -7,13 +7,17 @@ import json
 import logging
 import select
 import colorsys
+import io
 
 logging.basicConfig(level=logging.INFO)
 logging.getLogger().handlers[0].setFormatter(logging.Formatter('%(asctime)s (%(levelname)s) - %(message)s'))
 
 HOME_PATH = os.environ['HOME']
 ORIGIN_VESKTOP_THEME_PATH = os.path.join(HOME_PATH, ".config/vesktop/themes")
-IS_STDIN = select.select([sys.stdin], [], [], 0.0)[0]
+try:
+    IS_STDIN = select.select([sys.stdin], [], [], 0.0)[0] if sys.stdin.fileno() else []
+except io.UnsupportedOperation:
+    IS_STDIN = []
 colors = {}
 DEFAULT_THEME = """
 /**
@@ -393,6 +397,10 @@ def remap_key(match: re.Match) -> str:
     if not first_arg_values:
         raise ValueError(f"Color '{first_arg}' not found in the colors dictionary.")
     second_arg = match.group(2) if match.group(2) else "1.0" # get opacity value
+    if first_arg == "wallpaper":
+        if second_arg != "1.0":
+            raise ValueError(f"You cant use opacity or modifier with wallpaper key.")
+        return colors["wallpaper"]
     try:
         second_arg = float(second_arg) 
         if second_arg < 0.0:
@@ -425,8 +433,6 @@ def remap_key(match: re.Match) -> str:
     if second_modifer and second_modifer_name in SECOND_MODIFIERS:
         second_modifer_params = SECOND_MODIFIERS[second_modifer_name](second_modifer_raw_params, first_modifier) # set second_modifer_params
 
-    if (first_arg == "wallpaper" or first_arg == "w") and (opacity != 1.0 or first_modifier):
-        raise ValueError(f"You cant use opacity or modifier with wallpaper key.")
     if first_modifier and first_modifier in FIRST_MODIFIERS:
         return FIRST_MODIFIERS[first_modifier](first_arg_values, opacity, second_modifer_params)
     return FIRST_MODIFIERS['DEFAULT'](first_arg_values, opacity, second_modifer_params)

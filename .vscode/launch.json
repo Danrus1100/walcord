@@ -10,8 +10,10 @@
             "justMyCode": false,
             "stopOnEntry": true,
             "args": [
-                "-t", "${workspaceFolder}/test.txt",
-                "-o", "${workspaceFolder}/test2.txt"
+                "-t",
+                "${workspaceFolder}/test.txt",
+                "-o",
+                "${workspaceFolder}/test2.txt"
             ]
         },
         {
@@ -23,8 +25,17 @@
             "justMyCode": false,
             "stopOnEntry": true,
             "args": [
-                "-t", "${workspaceFolder}/examples/",
+                "-t",
+                "${workspaceFolder}/examples/",
             ]
         },
+        {
+            "name": "Test Walcord",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "tests.py",
+            "console": "internalConsole",
+            "justMyCode": false,
+        }
     ]
 }

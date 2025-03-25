@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/mock/wallpaper/path/image.jpg",
+    "alpha": "100",
+
+    "special": {
+        "background": "#131f2c",
+        "foreground": "#d8d4d8",
+        "cursor": "#d8d4d8"
+    },
+    "colors": {
+        "color0": "#131f2c",
+        "color1": "#3882C2",
+        "color2": "#6E9AC5",
+        "color3": "#9B9CB0",
+        "color4": "#85A2CB",
+        "color5": "#92ACC8",
+        "color6": "#ACB8C9",
+        "color7": "#d8d4d8",
+        "color8": "#979497",
+        "color9": "#3882C2",
+        "color10": "#6E9AC5",
+        "color11": "#9B9CB0",
+        "color12": "#85A2CB",
+        "color13": "#92ACC8",
+        "color14": "#ACB8C9",
+        "color15": "#d8d4d8"
+    }
+}
