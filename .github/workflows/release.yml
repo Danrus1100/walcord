@@ -1,0 +1,53 @@
+name: Publish to AUR on Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  push_to_aur:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract version from release tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Setup SSH for AUR
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.AUR_SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa aur.archlinux.org >> ~/.ssh/known_hosts
+
+      - name: Update PKGBUILD and push to AUR
+        uses: uraimo/run-on-arch-action@v2
+        with:
+          arch: x86_64
+          distro: archlinux_latest
+          dockerRunArgs: |
+            --volume "${HOME}/.ssh:/root/.ssh"
+          install: |
+            pacman -Syu --noconfirm git base-devel pacman-contrib
+          run: |
+            # Update PKGBUILD
+            sed -i "s/pkgver=.*/pkgver=${VERSION}/" PKGBUILD
+            sed -i "s/pkgrel=.*/pkgrel=1/" PKGBUILD
+            updpkgsums
+            
+            # Generate .SRCINFO
+            makepkg --printsrcinfo > .SRCINFO
+            
+            # Push to AUR
+            git clone ssh://aur@aur.archlinux.org/walcord.git aur-repo
+            cp PKGBUILD .SRCINFO aur-repo/
+            cd aur-repo
+            git config --global user.name "GitHub Actions"
+            git config --global user.email "actions@github.com"
+            git add PKGBUILD .SRCINFO
+            git commit -m "Update to version ${VERSION}"
+            git push

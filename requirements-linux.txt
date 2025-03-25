@@ -1,3 +1,4 @@
 pywal==3.3.0
 argparse==1.4.0
 pyinstaller==6.10.0
+pytest==8.3.5
