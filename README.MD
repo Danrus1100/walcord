@@ -1,4 +1,4 @@
-# Walcord - (Pywal)ing *every* themes for Vencord/Vesktop/BeterDiscord
+# Walcord - (Pywal)ing *every* themes for Vencord/Vesktop/BetterDiscord
 
 ![image](images/demo.gif)
 <p align="center">
