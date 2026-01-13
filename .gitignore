@@ -3,8 +3,8 @@ build/
 dist/
 __pycache__/
 .pytest_cache/
+tests/
+*.egg-info/
 
-main.spec
-test.py
-test.txt
-test2.txt
+.python-version
+uv.lock
