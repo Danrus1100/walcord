@@ -1,0 +1,29 @@
+[project]
+name = "walcord"
+version = "2.10"
+description = "Pywal themes for Vesktop "
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = ["argparse>=1.4.0", "pywal>=3.8.13"]
+
+[project.scripts]
+walcord = "walcord.walcord:main"
+
+[project.optional-dependencies]
+test = [
+    "pytest>=9.0.2",
+]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests"
+]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+]
