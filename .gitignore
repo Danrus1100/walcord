@@ -3,7 +3,6 @@ build/
 dist/
 __pycache__/
 .pytest_cache/
-tests/
 *.egg-info/
 
 .python-version
